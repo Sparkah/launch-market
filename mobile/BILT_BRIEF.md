@@ -34,9 +34,9 @@ Game Factory Launch Market
 
 ## Payment Story
 
-- Free: 1 public candidate per month.
-- Creator Pro: GBP 19/month for more builds and private candidates.
-- Studio: GBP 199/month for team review, custom gates, and publish prep.
+- Free: 1 free build, then plays mint more (30 plays = 1 build).
+- Creator Pro: $25/month, 5 builds a day (matches the web pricing).
+- Studio: $50/month, 25 builds a day, for studios and clients.
 - Marketplace: 5-10 percent take-rate on revenue-share games promoted through
   the market.
 

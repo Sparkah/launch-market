@@ -11,7 +11,8 @@
     "runner": "python3 runner/run_job.py --prompt \"merge defense game with fair launch score\"",
     "plain:install": "npx plain-forge install --agent claude --scope project",
     "plain:gate": "bash build_gate.sh",
-    "plain:verify": "python3 gate_conformance.py gate/gate_runner.py"
+    "plain:verify": "python3 gate_conformance.py gate/gate_runner.py",
+    "plain:healthcheck": "test -f specs/gate_spec.plain && test -f codeplain/config.yaml && python3 gate_conformance.py gate/gate_runner.py && echo 'plain healthcheck: specs+config present, gate 7/7 PASS'"
   },
   "dependencies": {
     "@mysten/sui": "^2.19.0",

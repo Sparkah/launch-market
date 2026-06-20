@@ -54,6 +54,16 @@ they pass while missing the exact acceptance wording. We saw this directly:
 `gate_conformance.py` is the contract, not codeplain's own tests. This mirrors
 `Shared/experiments/codeplain-factory-gate/RESULTS.md`.
 
+## What Codeplain generated vs the factory
+
+- **Codeplain generated** the candidate validation gate (`gate/gate_runner.py`),
+  rendered from `specs/gate_spec.plain`. This is the trust layer: every candidate is
+  judged by Codeplain-generated code, not hand-written rules.
+- **The factory / templates generate** the playable games (the instant browser
+  prototypes and the curated feed games).
+- So Codeplain is the source of truth for the **validation contract**, not the game
+  renderer. Right tool for each job, stated plainly.
+
 ## Files
 
 - `specs/gate_spec.plain` - the spec (source of truth for behaviour)
