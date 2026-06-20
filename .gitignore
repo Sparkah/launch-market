@@ -15,3 +15,4 @@ vite.config.d.ts
 .codeplain.env
 __pycache__/
 *.pyc
+.sui_registry.key

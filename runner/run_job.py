@@ -256,10 +256,18 @@ def main() -> int:
     write_json(cand_path, candidate)
 
     # Anchor the candidate manifest on Walrus -> real receipt; flip walrus live.
+    # The blob's Sui object is sent to the registry address, so sui goes live too.
     manifest = publish_to_walrus(cand_path)
     if manifest.get("blobId"):
         candidate["receipts"] = {"candidate": manifest}
         candidate["integrations"]["walrus"] = "live"
+        if manifest.get("suiObject"):
+            candidate["integrations"]["sui"] = "live"
+            candidate["sui"] = {
+                "registry": manifest.get("suiOwner"),
+                "object": manifest.get("suiObject"),
+                "explorer": manifest.get("suiExplorer"),
+            }
         write_json(cand_path, candidate)
 
     # Validate the (now walrus-live) candidate with the Codeplain gate.

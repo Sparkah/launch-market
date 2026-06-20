@@ -8,14 +8,20 @@ touches the production Factory.
 
 ## Bounty Coverage
 
-- **Solvimon:** business-ready creator launchpad with paid tiers and take-rate.
-- **Codeplain:** `.plain` specs are the contract layer for candidates, gates,
-  market allocation, and the mobile companion.
-- **Sui:** candidate registry target with Sui object references.
-- **Walrus:** durable artifact target for specs, manifests, reports, and builds.
-- **DeepBook:** transparent launch-credit market primitive.
-- **BGA:** fairer market strategy: evidence must be visible before allocation.
-- **Bilt.me:** mobile companion brief for creator intake and backer allocation.
+- **Codeplain (LIVE):** a `.plain` spec renders the candidate validation gate,
+  verified 7/7 against an external acceptance harness. See `CODEPLAIN.md`.
+- **Walrus (LIVE, testnet):** every candidate's manifest + Codeplain-gated report
+  are anchored as durable, public blobs. See `ONCHAIN.md`.
+- **Sui (LIVE, testnet):** each receipt blob's Sui object is owned by the Launch
+  Market registry - a real on-chain candidate registry with Sui object references,
+  on Sui's verifiable-fairness + true-ownership gaming thesis. See `ONCHAIN.md`.
+- **Solvimon:** the Moons economy (30 plays = 1 build) plus Pro/Studio
+  subscriptions and a graduation profit-share. See the landing page.
+- **BGA (LIVE):** the Codeplain gate produces genuine validation evidence, so
+  evidence is public and on-chain before any capital is allocated.
+- **DeepBook (planned):** the transparent launch-credit market signal, still
+  mocked - the gate honestly flags it.
+- **Bilt.me (brief):** mobile companion for creator intake and backer allocation.
 
 ## Safety Boundary
 
