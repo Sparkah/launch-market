@@ -2,8 +2,10 @@
 
 **The accessible front door to web3 gaming.** A feed of instant, AI-generated
 casual games anyone can play with a Google login (zkLogin, no wallet) and make
-from one sentence. Every game is validated by a Codeplain-generated gate and gets
-a verifiable Walrus + Sui + DeepBook receipt before the crowd greenlights it.
+from one sentence. Candidate games run a Codeplain-generated validation gate and
+get a Walrus + Sui + DeepBook receipt before they graduate; a live example receipt
+is in the demo. Browser-made prototypes are quick playable sketches that enter the
+greenlight feed (they are not stamped with the on-chain receipt until they graduate).
 
 - Live demo: https://launch-market-wheat.vercel.app
 - Public repo: https://github.com/Sparkah/launch-market

@@ -25,8 +25,8 @@ GET https://deepbook-indexer.testnet.mystenlabs.com/orderbook/SUI_DBUSDC?level=1
 -> { "bids": [["0.705","10"]], "asks": [["0.714","10"]], ... }
 ```
 
-## BGA transparency rule
+## Transparency rule
 
-No recommendation hides missing evidence. Every allocation record shows `why`,
-`risk`, and `missing_evidence`, and the gate-validated receipt is public on-chain
-before any capital is allocated.
+Every candidate's gate-validated receipt is public on-chain (Walrus blob + Sui
+object) before it graduates, so a promotion decision can always be checked against
+real evidence rather than a claim.

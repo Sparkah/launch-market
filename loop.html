@@ -112,6 +112,9 @@ body{background:#0a0d0a;color:var(--ink);font-family:var(--mono);display:grid;pl
 const ENOKI_PUBLIC_KEY = 'enoki_public_70f43415c8b95e8a9fd899c3c7cb3da6';
 const GOOGLE_CLIENT_ID  = '928006945966-16dc76g3d64tak3p9237raajdn69av12.apps.googleusercontent.com';
 const REGISTRY = '0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df';
+const WORKER = 'https://launch-market-games.timofeymarkin98.workers.dev';
+function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];});}
+function hueOf(s){var h=0,i=0;s=String(s||'x');for(;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h%360;}
 
 // Real, embedded factory games (served locally with the gallery sdk.js).
 const THUMBS = 'https://game-factory.tech/thumbs';
@@ -141,6 +144,19 @@ $('#feed').innerHTML = FEED.map((c,i)=>`
       <div><button class="play" data-i="${i}">&#9654; Play</button></div>
     </div>
   </section>`).join('');
+
+// pull community-generated games into the feed (the real greenlight queue)
+fetch(WORKER+'/api/feed').then(function(r){return r.json();}).then(function(d){
+  if(!d||!d.games||!d.games.length) return;
+  var feed=$('#feed');
+  d.games.slice(0,20).forEach(function(g){
+    var hue=hueOf(g.id||g.title), sec=document.createElement('section');
+    sec.className='card';
+    sec.style.background='linear-gradient(160deg,hsl('+hue+',55%,22%),#080a0a)';
+    sec.innerHTML='<div class="scrim"></div><div class="meta"><div class="gen">community &middot; '+esc(g.mechanic||'game')+'</div><h2>'+esc(g.title)+'</h2><p>just made by a player</p><div class="real" style="border-color:rgba(255,179,71,.45);color:var(--amber)">community build</div><div><button class="play" data-url="'+WORKER+'/play/'+encodeURIComponent(g.id)+'" data-title="'+esc(g.title)+'">&#9654; Play</button></div></div>';
+    feed.appendChild(sec);
+  });
+}).catch(function(){});
 
 const setMoons = n => { moons=n; $('#moonN').textContent=n; };
 const trunc = a => a.slice(0,6)+'..'+a.slice(-4);
@@ -174,9 +190,10 @@ function exitGame(){
 }
 
 document.addEventListener('click', e=>{
-  const p=e.target.closest('.play'); if(p){ play(+p.dataset.i); return; }
+  const p=e.target.closest('.play'); if(p){ if(p.dataset.url){ playUrl(p.dataset.url, p.dataset.title); } else { play(+p.dataset.i); } return; }
   const l=e.target.closest('.rb[data-like]'); if(l){ l.classList.toggle('on'); }
 });
+function playUrl(url, title){ current={t:title||'Community game', community:true}; $('#gtitle').innerHTML=esc(title)+' <small>&middot; community</small>'; $('#gframe').src=url; $('#gameover').classList.add('show'); }
 $('#gback').addEventListener('click', exitGame);
 
 function setSignedIn(addr, demo){

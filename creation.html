@@ -228,15 +228,10 @@ $('#go').addEventListener('click',()=>{
   const id='gf-lm-'+Math.floor(1e5+ (prompt.length*7919)%9e5).toString(36);
   const lines=[
     `<span class="ln"><span class="p">~/launch_market $</span> create "${prompt}"</span>`,
-    `<span class="ln">candidate <span class="g">${id}</span> &middot; preset <span class="g">${p.name}</span> &middot; ${p.dim}</span>`,
-    e.id==='codeplain'
-      ? `<span class="ln">building logic via <span class="g">Codeplain</span> (${p.name.toLowerCase()}.plain) ... factory rendering ...</span>`
-      : e.fallback
-        ? `<span class="ln">no credits &middot; building via <span class="a">factory (default)</span> ...</span>`
-        : `<span class="ln">building via <span class="a">factory 3D</span> (Three.js) ...</span>`,
-    `<span class="ln">gate: <span class="g">passed</span> &middot; receipt: <a class="g" style="text-decoration:underline" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4" target="_blank" rel="noopener">Walrus blob</a> + <a class="g" style="text-decoration:underline" href="https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0" target="_blank" rel="noopener">Sui object</a></span>`,
-    `<span class="ln" style="opacity:.6">(live example from a real run &middot; full pipeline in runner/run_job.py)</span>`,
-    `<span class="ln">&rarr; <span class="g">${cap(prompt)}</span> built &amp; playable. publishing to the greenlight feed ...</span>`,
+    `<span class="ln">prototype <span class="g">${id}</span> &middot; preset <span class="g">${p.name}</span> &middot; ${p.dim}</span>`,
+    `<span class="ln">building an instant playable prototype ...</span>`,
+    `<span class="ln" style="opacity:.75">graduating games run the <span class="g">Codeplain</span> gate + get a Walrus/Sui receipt &mdash; live example: <a class="g" style="text-decoration:underline" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4" target="_blank" rel="noopener">Walrus blob</a> + <a class="g" style="text-decoration:underline" href="https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0" target="_blank" rel="noopener">Sui object</a></span>`,
+    `<span class="ln">&rarr; <span class="g">${cap(prompt)}</span> prototype ready. adding to the greenlight feed ...</span>`,
   ];
   out.innerHTML=''; let i=0;
   setTimeout(function(){ try{ out.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} }, 80);

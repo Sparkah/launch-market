@@ -62,7 +62,7 @@
 
   // ---- the game template (token-replaced; the game's own JS reads the injected literals) ----
   var TEMPLATE = [
-'<!doctype html><html lang="en"><head><meta charset="utf-8">',
+'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="generator" content="launch-market-gen">',
 '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">',
 '<title>__TITLE__</title><style>',
 '*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}',
