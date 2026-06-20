@@ -6,39 +6,43 @@ import:
 
 ***definitions***
 
-- :GateRunner: is a command line validator for a :FactorySandbox:.
-- :FactorySandbox: is a folder under `runs/<job-id>/` containing candidate artifacts.
-- :ValidationReport: is the JSON report emitted by :GateRunner:.
-- :HardFail: is a validation issue that blocks launch allocation.
-- :Warning: is a validation issue that does not block allocation but must be visible.
-- :EvidenceLedger: is the public list of proofs shown to creators, backers, and judges.
+- :GateRunner: is a command line program that validates a :FactorySandbox:. It is invoked as `python gate_runner.py <sandbox_path>` with exactly one positional argument.
+- :FactorySandbox: is the folder passed as that single argument. It may contain a `candidate.json` file.
+- :CandidateManifest: is the `candidate.json` file inside the :FactorySandbox:. It is a JSON object that contains an `artifacts` object (string keys mapped to path strings) and an `integrations` object (string keys such as `walrus`, `sui`, and `deepbook` mapped to status strings such as `live` or `mocked`).
+- :ValidationReport: is a JSON object that :GateRunner: prints as a single compact line to standard output. It has exactly these top level fields: `ok` (boolean), `issues` (a list of :Issue: objects), `checked` (a list of strings), and `ledger` (a list of strings).
+- :Issue: is an object with exactly three fields: `code` (a short snake_case string identifier), `severity` (either the string `ERROR` or the string `WARN`), and `message` (a human readable string).
+- :HardFail: is an :Issue: whose `severity` is `ERROR`. Any :HardFail: must set `ok` to false.
+- :Warning: is an :Issue: whose `severity` is `WARN`. A :Warning: must never change `ok` and must never change the exit status.
 
 ***implementation reqs***
 
-- :Implementation: should use only deterministic checks for the hackathon build.
-- :Implementation: should emit compact JSON to stdout.
-- :ValidationReport: should include `ok`, `issues`, `checked`, and `ledger` fields.
-- :HardFail: severity should be exactly `ERROR`.
-- :Warning: severity should be exactly `WARN`.
-- :Implementation: should not call production publish scripts.
+- :Implementation: should use only deterministic checks. It must never call the network or any production publish script.
+- :Implementation: should print the :ValidationReport: as a single compact JSON line and print nothing else to standard output.
+- Every :Issue: in the `issues` list must include all three of `code`, `severity`, and `message`.
+- :GateRunner: should exit with status code 0 when `ok` is true, and with a nonzero status code when `ok` is false.
+- The `code` field must be exactly one of these literal strings, copied verbatim with no paraphrase, prefix, or suffix: `missing_candidate_manifest`, `production_path`, `walrus_mocked`, `sui_mocked`, `deepbook_mocked`.
+- When `candidate.json` is missing, the issue `code` must be exactly the literal string `missing_candidate_manifest` (not `missing_candidate_json` or any other wording).
+- A production folder path is a path that starts with exactly `Games/` or `Gallery/`. Paths that start with `runs/` are allowed and must not be flagged. Do not treat `factory/`, `production/`, or any other name as a production path. When an artifact path starts with `Games/` or `Gallery/`, the issue `code` must be exactly the literal string `production_path`.
+- When an integration is mocked, use an integration specific code: exactly `walrus_mocked` when `walrus` is mocked, exactly `sui_mocked` when `sui` is mocked, exactly `deepbook_mocked` when `deepbook` is mocked. Do not use a single generic code for all integrations.
 
 ***functional specs***
 
 - :GateRunner: should fail when `candidate.json` is missing.
 
   ***acceptance tests***
-  - When `candidate.json` is absent, :ValidationReport: should contain an issue with code `missing_candidate_manifest`.
-  - When `candidate.json` is absent, `ok` should be false.
+  - Given a :FactorySandbox: that contains no `candidate.json`, the `issues` list should contain an :Issue: whose `code` is exactly `missing_candidate_manifest` and whose `severity` is `ERROR`.
+  - Given a :FactorySandbox: that contains no `candidate.json`, `ok` should be false and the process exit status should be nonzero.
 
-- :GateRunner: should fail when generated paths point at production Factory folders.
-
-  ***acceptance tests***
-  - When any artifact path starts with `Games/`, :ValidationReport: should contain an issue with code `production_path`.
-  - When any artifact path starts with `Gallery/`, :ValidationReport: should contain an issue with code `production_path`.
-
-- :GateRunner: should warn when on-chain or storage integrations are mocked.
+- :GateRunner: should fail when any artifact path points at a production Factory folder.
 
   ***acceptance tests***
-  - When Walrus status is `mocked`, :ValidationReport: should include issue code `walrus_mocked` with severity `WARN`.
-  - When Sui status is `mocked`, :ValidationReport: should include issue code `sui_mocked` with severity `WARN`.
-  - Warnings alone should not make `ok` false.
+  - Given a `candidate.json` whose `artifacts` object contains a value that starts with `Games/`, the `issues` list should contain an :Issue: whose `code` is exactly `production_path` and whose `severity` is `ERROR`, and `ok` should be false.
+  - Given a `candidate.json` whose `artifacts` object contains a value that starts with `Gallery/`, the `issues` list should contain an :Issue: whose `code` is exactly `production_path` and whose `severity` is `ERROR`, and `ok` should be false.
+  - Given a `candidate.json` whose `artifacts` values all start with `runs/`, the `issues` list should contain no :Issue: whose `code` is `production_path`.
+
+- :GateRunner: should warn, without failing, when an on chain or storage integration is mocked.
+
+  ***acceptance tests***
+  - Given a `candidate.json` whose `integrations` object maps `walrus` to the string `mocked`, the `issues` list should contain an :Issue: whose `code` is exactly `walrus_mocked` and whose `severity` is `WARN`, and `ok` should remain true.
+  - Given a `candidate.json` whose `integrations` object maps `sui` to the string `mocked`, the `issues` list should contain an :Issue: whose `code` is exactly `sui_mocked` and whose `severity` is `WARN`, and `ok` should remain true.
+  - Given a `candidate.json` whose `integrations` object maps both `walrus` and `sui` to the string `live`, the `issues` list should contain no :Issue: whose `severity` is `WARN`, and `ok` should be true.

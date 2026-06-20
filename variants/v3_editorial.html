@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Hallmark - macrostructure: Long Document (editorial) - tone: editorial/luxury - anchor hue: oxblood */
+:root{ --paper:#f7f4ee; --ink:#17120c; --oxblood:#6e1414; --hair:#cfc7b8; --mute:#7c7363; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Fraunces',serif}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+a{color:inherit;text-decoration:none}
+.caps{text-transform:uppercase;letter-spacing:.28em;font-size:11px;font-weight:600}
+
+/* masthead */
+.mast{display:flex;justify-content:space-between;align-items:baseline;padding:24px 0 16px;border-bottom:1px solid var(--ink)}
+.mast .name{font-family:'Fraunces';font-weight:600;font-size:22px;letter-spacing:.02em}
+.mast .r{color:var(--oxblood)}
+
+/* hero */
+.hero{padding:74px 0 60px;border-bottom:1px solid var(--hair)}
+.issue{display:flex;justify-content:space-between;color:var(--mute);margin-bottom:46px}
+h1{font-family:'Fraunces';font-weight:420;font-size:clamp(46px,8.6vw,128px);line-height:.99;letter-spacing:-.018em;overflow-wrap:anywhere;max-width:15ch}
+h1 em{font-style:italic;color:var(--oxblood)}
+.deck{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-top:42px;flex-wrap:wrap}
+.deck .lead{font-family:'Fraunces';font-style:italic;font-weight:400;font-size:clamp(20px,2.4vw,30px);color:var(--ink)}
+.links{display:flex;gap:26px;align-items:center}
+.links a{position:relative;padding-bottom:6px}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.links a:hover::after{transform:scaleX(1)}
+.links a.solid{color:var(--oxblood)}
+.links a.solid::after{background:var(--oxblood);transform:scaleX(1)}
+
+/* loop - three movements */
+.loop{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--hair)}
+.mv{padding:46px 30px 50px;border-right:1px solid var(--hair);text-align:center}
+.mv:last-child{border-right:none}
+.mv .no{font-family:'Archivo';color:var(--oxblood);font-size:12px;letter-spacing:.3em;margin-bottom:14px}
+.mv .w{font-family:'Fraunces';font-weight:430;font-size:clamp(30px,4.6vw,52px);letter-spacing:-.01em}
+@media(max-width:680px){.loop{grid-template-columns:1fr}.mv{border-right:none;border-bottom:1px solid var(--hair);padding:30px}.mv:last-child{border-bottom:none}}
+
+/* gallery - curated spread */
+.gal{padding:64px 0;border-bottom:1px solid var(--hair)}
+.gal .head{font-family:'Fraunces';font-style:italic;font-size:22px;color:var(--mute);margin-bottom:34px}
+.spread{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;align-items:end}
+.f{position:relative}
+.f img{width:100%;display:block;border:1px solid var(--hair)}
+.f figcaption{font-family:'Fraunces';font-style:italic;font-size:14px;color:var(--mute);margin-top:9px}
+.a{grid-column:1/6}.b{grid-column:7/13}.c{grid-column:1/4}.d{grid-column:5/9}.e{grid-column:10/13}
+@media(max-width:680px){.spread{grid-template-columns:1fr 1fr;gap:14px}.a,.b,.c,.d,.e{grid-column:auto}}
+
+/* statement */
+.state{padding:88px 0;text-align:center}
+.state h2{font-family:'Fraunces';font-weight:430;font-size:clamp(40px,8vw,108px);line-height:.96;letter-spacing:-.02em}
+.state h2 em{font-style:italic;color:var(--oxblood)}
+
+footer{display:flex;justify-content:space-between;align-items:center;padding:26px 0 50px;border-top:1px solid var(--ink);color:var(--mute);flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <div class="name">Launch Market<span class="r">.</span></div>
+    <div class="caps">Submit a prompt</div>
+  </div>
+
+  <header class="hero">
+    <div class="issue caps"><span>Greenlight for AI games</span><span>No. 01</span></div>
+    <h1>The crowd decides which AI games get <em>made.</em></h1>
+    <div class="deck">
+      <div class="lead">Back it before it's built.</div>
+      <div class="links caps">
+        <a class="solid" href="#">Browse candidates</a>
+        <a href="#">Submit a prompt</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="loop">
+    <div class="mv"><div class="no caps">I</div><div class="w">Pitch.</div></div>
+    <div class="mv"><div class="no caps">II</div><div class="w">Greenlight.</div></div>
+    <div class="mv"><div class="no caps">III</div><div class="w">Ship.</div></div>
+  </section>
+
+  <section class="gal">
+    <div class="head">Candidates, on the board.</div>
+    <div class="spread">
+      <figure class="f a"><img src="../landing-assets/backrooms.png" alt=""><figcaption>Backrooms</figcaption></figure>
+      <figure class="f b"><img src="../landing-assets/merge_conquest.png" alt=""><figcaption>Merge Conquest</figcaption></figure>
+      <figure class="f c"><img src="../landing-assets/devourling.png" alt=""><figcaption>Devourling</figcaption></figure>
+      <figure class="f d"><img src="../landing-assets/parry_knight.png" alt=""><figcaption>Parry Knight</figcaption></figure>
+      <figure class="f e"><img src="../landing-assets/boba_rush.png" alt=""><figcaption>Boba Rush</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="state">
+    <h2>Greenlight,<br>with <em>receipts.</em></h2>
+  </section>
+
+  <footer class="caps">
+    <span>Testnet. Sandbox. No slop.</span>
+    <span>Launch Market</span>
+  </footer>
+</div>
+</body>
+</html>

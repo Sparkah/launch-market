@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,6 +19,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RUNS_DIR = ROOT / "runs"
 FORBIDDEN_PREFIXES = ("Games/", "Gallery/", "../../Games/", "../../Gallery/")
+
+sys.path.insert(0, str(ROOT))
+try:
+    import walrus_publish
+except Exception:  # pragma: no cover - publishing is optional
+    walrus_publish = None
 
 
 def slugify(text: str) -> str:
@@ -200,6 +207,38 @@ def preview_html(candidate: dict) -> str:
 """
 
 
+def run_codeplain_gate(sandbox_dir: Path, candidate: dict) -> dict:
+    """Validate the sandbox with the Codeplain-generated gate.
+
+    The gate is rendered from `specs/gate_spec.plain` by Codeplain (see
+    `build_gate.sh` and `CODEPLAIN.md`). Falls back to the inline check when the
+    generated gate has not been built yet.
+    """
+    gate = ROOT / "gate" / "gate_runner.py"
+    if gate.exists():
+        proc = subprocess.run(
+            [sys.executable, str(gate), str(sandbox_dir)],
+            capture_output=True,
+            text=True,
+        )
+        for line in reversed(proc.stdout.strip().splitlines()):
+            try:
+                return json.loads(line)
+            except json.JSONDecodeError:
+                continue
+    return validate_candidate(candidate)
+
+
+def publish_to_walrus(path: Path) -> dict:
+    """Anchor a file on Walrus testnet. Best-effort; returns {} / {error} on failure."""
+    if walrus_publish is None:
+        return {}
+    try:
+        return walrus_publish.publish_file(str(path))
+    except Exception as exc:  # network / endpoint hiccup: keep the run, skip the receipt
+        return {"error": str(exc)}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create a Launch Market sandbox candidate.")
     parser.add_argument("--prompt", required=True)
@@ -211,13 +250,32 @@ def main() -> int:
     assert_sandbox_path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    validation = validate_candidate(candidate)
-    write_json(run_dir / "candidate.json", candidate)
+    cand_path = run_dir / "candidate.json"
     write_text(run_dir / "DESIGN.md", design_doc(candidate))
     write_text(run_dir / "game" / "index.html", preview_html(candidate))
+    write_json(cand_path, candidate)
+
+    # Anchor the candidate manifest on Walrus -> real receipt; flip walrus live.
+    manifest = publish_to_walrus(cand_path)
+    if manifest.get("blobId"):
+        candidate["receipts"] = {"candidate": manifest}
+        candidate["integrations"]["walrus"] = "live"
+        write_json(cand_path, candidate)
+
+    # Validate the (now walrus-live) candidate with the Codeplain gate.
+    validation = run_codeplain_gate(run_dir, candidate)
     write_json(run_dir / "reports" / "validation.json", validation)
 
-    print(json.dumps({"ok": True, "run_dir": str(run_dir.relative_to(ROOT)), "candidate": candidate}, indent=2))
+    # Anchor the gate's validation report on Walrus too.
+    report = publish_to_walrus(run_dir / "reports" / "validation.json")
+    if report.get("blobId"):
+        candidate.setdefault("receipts", {})["validation"] = report
+        write_json(cand_path, candidate)
+
+    receipt = (candidate.get("receipts", {}).get("validation")
+               or candidate.get("receipts", {}).get("candidate") or {})
+    print(json.dumps({"ok": True, "run_dir": str(run_dir.relative_to(ROOT)),
+                      "receipt": receipt.get("url"), "candidate": candidate}, indent=2))
     return 0
 
 

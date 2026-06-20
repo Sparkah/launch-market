@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · macrostructure: Manifesto-Poster · tone: brutalist-riso · anchor hue: riso orange + riso blue duotone */
+:root{
+  --paper:#f1ead6; --paper-d:#e7dec5;
+  --ink:#171410; --o:#ff4f12; --b:#244bff; --b2:#2f5bff;
+  --disp:'Anton',sans-serif; --grot:'Archivo',sans-serif; --mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--grot);
+  position:relative; -webkit-font-smoothing:antialiased;
+}
+/* paper grain + halftone */
+body::before{
+  content:""; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.55; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.10; mix-blend-mode:multiply;
+  background-image:radial-gradient(var(--ink) 22%, transparent 23%); background-size:5px 5px;
+}
+.svgdefs{position:absolute;width:0;height:0;overflow:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding:0 26px;position:relative;z-index:2}
+img{display:block}
+
+/* registration corner marks */
+.regmark{position:absolute;width:26px;height:26px;z-index:3;pointer-events:none;opacity:.7}
+.regmark::before,.regmark::after{content:"";position:absolute;background:var(--ink)}
+.regmark::before{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
+.regmark::after{top:50%;left:0;height:1.5px;width:100%;transform:translateY(-50%)}
+
+/* masthead */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:20px 0 16px;border-bottom:3px solid var(--ink)}
+.mark{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.34em;text-transform:uppercase}
+.mark b{color:var(--o)}
+.mast .stamp{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  border:1.5px solid var(--b);color:var(--b);padding:5px 9px;transform:rotate(-3.5deg);border-radius:3px;white-space:nowrap}
+
+/* hero */
+.hero{padding:34px 0 22px;position:relative}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--b);margin-bottom:14px}
+.kick i{color:var(--o);font-style:normal}
+.head{position:relative;font-family:var(--disp);text-transform:uppercase;line-height:.84;
+  font-size:clamp(58px,14.5vw,184px);letter-spacing:.005em;overflow-wrap:anywhere}
+.head .ln{display:block;position:relative}
+.head .l1{color:var(--ink)} .head .l1 em{color:var(--o);font-style:normal}
+.head .l2{color:var(--b)}
+.head .l3{color:var(--ink)} .head .l3 em{color:var(--o);font-style:normal}
+.head .l4{color:var(--b)}
+/* misregistration ghost */
+.head .ghost{position:absolute;inset:0;color:var(--o);opacity:.34;transform:translate(5px,4px);z-index:-1}
+.greenlit{position:absolute;right:1%;top:-6%;font-family:var(--mono);font-weight:700;font-size:clamp(13px,2.4vw,22px);
+  letter-spacing:.12em;color:var(--o);border:3px solid var(--o);padding:9px 14px 7px;border-radius:6px;
+  transform:rotate(9deg);text-transform:uppercase;line-height:1;box-shadow:3px 3px 0 rgba(36,75,255,.45);background:rgba(241,234,214,.5)}
+.greenlit:after{content:"";position:absolute;inset:3px;border:1px solid var(--o);border-radius:4px;opacity:.6}
+
+.support{display:inline-block;font-family:var(--disp);text-transform:uppercase;font-size:clamp(20px,4.4vw,40px);
+  letter-spacing:.02em;margin-top:30px;background:var(--ink);color:var(--paper);padding:7px 16px 4px;transform:rotate(-1.3deg)}
+
+.ctas{display:flex;flex-wrap:wrap;gap:16px;margin-top:30px}
+.sticker{font-family:var(--grot);font-weight:900;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(15px,2vw,19px);
+  padding:15px 26px;border:3px solid var(--ink);cursor:pointer;text-decoration:none;color:var(--ink);
+  transition:transform .12s ease,box-shadow .12s ease;display:inline-block}
+.sticker.o{background:var(--o);transform:rotate(-1.6deg);box-shadow:5px 5px 0 var(--ink)}
+.sticker.b{background:var(--paper);color:var(--b);border-color:var(--b);transform:rotate(1.4deg);box-shadow:5px 5px 0 var(--b)}
+.sticker:hover{transform:rotate(0) translate(-1px,-1px)}
+.sticker.o:hover{box-shadow:7px 7px 0 var(--ink)} .sticker.b:hover{box-shadow:7px 7px 0 var(--b)}
+
+/* duotone covers */
+.duo{filter:url(#duo-o)}
+.duo.b{filter:url(#duo-b)}
+.cov{position:relative;border:3px solid var(--ink);overflow:hidden;background:var(--paper)}
+.cov img{width:100%;height:100%;object-fit:cover}
+.cov::after{content:"";position:absolute;inset:0;mix-blend-mode:multiply;opacity:.5;
+  background-image:radial-gradient(var(--ink) 26%,transparent 27%);background-size:4px 4px;pointer-events:none}
+.cov .tab{position:absolute;left:-3px;bottom:10px;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--ink);color:var(--paper);padding:4px 9px}
+
+/* collage band */
+.band{border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);margin-top:46px;padding:40px 0 48px;position:relative;overflow:hidden}
+.collage{position:relative;display:grid;grid-template-columns:repeat(12,1fr);gap:0;min-height:460px}
+.collage .cov{box-shadow:6px 6px 0 rgba(23,20,16,.18)}
+.c1{grid-column:1/5;grid-row:1;transform:rotate(-4deg);z-index:3;aspect-ratio:1/1;margin-top:10px}
+.c2{grid-column:4/8;grid-row:1;transform:rotate(3deg);z-index:5;aspect-ratio:4/3;margin-top:60px}
+.c3{grid-column:8/13;grid-row:1;transform:rotate(-2.5deg);z-index:4;aspect-ratio:16/10}
+.c4{grid-column:2/6;grid-row:1;transform:rotate(2deg);z-index:6;aspect-ratio:5/4;margin-top:250px}
+.c5{grid-column:6/10;grid-row:1;transform:rotate(-3.5deg);z-index:7;aspect-ratio:1/1;margin-top:230px}
+.c6{grid-column:9/13;grid-row:1;transform:rotate(4deg);z-index:6;aspect-ratio:5/4;margin-top:210px}
+.bandtag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-4deg);z-index:20;
+  font-family:var(--disp);text-transform:uppercase;font-size:clamp(30px,7vw,84px);color:var(--paper);
+  background:var(--b);padding:6px 22px 2px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);white-space:nowrap;line-height:1}
+
+/* loop band */
+.loop{padding:58px 0 50px;text-align:center}
+.loop .row{font-family:var(--disp);text-transform:uppercase;line-height:.9;font-size:clamp(46px,13vw,150px);letter-spacing:.01em}
+.loop .p1{color:var(--o)} .loop .p2{color:var(--b)} .loop .p3{color:var(--ink)}
+
+/* receipts */
+.rec{border-top:3px solid var(--ink);padding:46px 0 30px}
+.rec h2{font-family:var(--disp);text-transform:uppercase;font-size:clamp(34px,8.5vw,108px);line-height:.86;overflow-wrap:anywhere}
+.rec h2 em{color:var(--o);font-style:normal}
+.rec h2 b{color:var(--b);font-weight:400}
+.strip{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.strip .cov{flex:1 1 150px;aspect-ratio:1/1;transform:rotate(-1.5deg)}
+.strip .cov:nth-child(even){transform:rotate(2deg)}
+
+/* footer */
+.foot{border-top:3px solid var(--ink);margin-top:30px;padding:26px 0 60px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot .big{font-family:var(--disp);text-transform:uppercase;font-size:clamp(22px,5vw,52px);letter-spacing:.02em}
+.foot .big i{font-style:normal;color:var(--o)} .foot .big u{text-decoration:none;color:var(--b)}
+.foot .mk{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;transform:rotate(-2deg);border:1.5px solid var(--ink);padding:6px 10px}
+
+[data-rise]{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+[data-rise].in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){[data-rise]{opacity:1;transform:none;transition:none}}
+
+@media(max-width:720px){
+  .mast .stamp{display:none}
+  .head{font-size:clamp(50px,17vw,90px)}
+  .greenlit{top:auto;bottom:-2%;right:2%}
+  .collage{display:flex;flex-direction:column;gap:18px;min-height:0}
+  .collage .cov{transform:rotate(-1.5deg)!important;margin:0!important;width:100%;aspect-ratio:16/10!important}
+  .collage .cov:nth-child(even){transform:rotate(1.5deg)!important}
+  .bandtag{position:static;transform:rotate(-3deg);display:inline-block;margin:0 0 6px;font-size:42px}
+  .band{padding:28px 0 32px}
+}
+</style>
+</head>
+<body>
+<svg class="svgdefs" aria-hidden="true">
+  <filter id="duo-o" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values="0.33 0.34 0.33 0 0  0.33 0.34 0.33 0 0  0.33 0.34 0.33 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR tableValues="0.99 0.945"/><feFuncG tableValues="0.18 0.918"/><feFuncB tableValues="0.05 0.839"/>
+    </feComponentTransfer>
+  </filter>
+  <filter id="duo-b" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values="0.33 0.34 0.33 0 0  0.33 0.34 0.33 0 0  0.33 0.34 0.33 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR tableValues="0.10 0.945"/><feFuncG tableValues="0.20 0.918"/><feFuncB tableValues="0.85 0.839"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+<span class="regmark" style="left:8px;top:8px"></span>
+<span class="regmark" style="right:8px;top:8px"></span>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="mark">LAUNCH <b>/</b> MARKET</div>
+    <div class="stamp">Est. 2026 &middot; Testnet pressing</div>
+  </header>
+
+  <section class="hero">
+    <div class="kick">Greenlight for AI games <i>/</i> the crowd presses GO</div>
+    <h1 class="head" data-rise>
+      <span class="greenlit">Greenlit</span>
+      <span class="ln l1"><span class="ghost" aria-hidden="true">The crowd</span>The <em>crowd</em></span>
+      <span class="ln l2">decides which</span>
+      <span class="ln l3">AI <em>games</em></span>
+      <span class="ln l4">get made.</span>
+    </h1>
+    <span class="support" data-rise>Back it before it's built.</span>
+    <div class="ctas" data-rise>
+      <a href="#" class="sticker o">Browse candidates</a>
+      <a href="#" class="sticker b">Submit a prompt</a>
+    </div>
+  </section>
+</div>
+
+<section class="band" data-rise>
+  <div class="wrap">
+    <div class="collage">
+      <div class="cov c1"><img class="duo" src="../landing-assets/merge_conquest.png" alt=""><span class="tab">Merge Conquest</span></div>
+      <div class="cov c2"><img class="duo b" src="../landing-assets/backrooms.png" alt=""><span class="tab">Backrooms</span></div>
+      <div class="cov c3"><img class="duo" src="../landing-assets/parry_knight.png" alt=""><span class="tab">Parry Knight</span></div>
+      <div class="cov c4"><img class="duo b" src="../landing-assets/devourling.png" alt=""><span class="tab">Devourling</span></div>
+      <div class="cov c5"><img class="duo" src="../landing-assets/beast_bazaar.png" alt=""><span class="tab">Beast Bazaar</span></div>
+      <div class="cov c6"><img class="duo b" src="../landing-assets/power_wash.png" alt=""><span class="tab">Power Wash</span></div>
+    </div>
+    <div class="bandtag">On the board</div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="loop" data-rise>
+    <div class="row p1">Pitch.</div>
+    <div class="row p2">Greenlight.</div>
+    <div class="row p3">Ship.</div>
+  </section>
+
+  <section class="rec">
+    <h2 data-rise>Greenlight,<br><em>with</em> <b>receipts.</b></h2>
+    <div class="strip" data-rise>
+      <div class="cov"><img class="duo b" src="../landing-assets/coin_cascade.png" alt=""></div>
+      <div class="cov"><img class="duo" src="../landing-assets/boba_rush.png" alt=""></div>
+      <div class="cov"><img class="duo b" src="../landing-assets/word_snake.png" alt=""></div>
+      <div class="cov"><img class="duo" src="../landing-assets/gulp_rush.png" alt=""></div>
+      <div class="cov"><img class="duo b" src="../landing-assets/knotwood.png" alt=""></div>
+      <div class="cov"><img class="duo" src="../landing-assets/trail_weaver.png" alt=""></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="big">Testnet. <i>Sandbox.</i> <u>No slop.</u></div>
+    <div class="mk">Launch Market &middot; No. 01</div>
+  </footer>
+</div>
+
+<script>
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('[data-rise]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

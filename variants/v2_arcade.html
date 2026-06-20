@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* Hallmark - macrostructure: Marquee Hero - tone: playful/arcade - anchor hue: magenta+cyan */
+:root{ --bg:#0a0a14; --bg2:#0f0f1f; --mag:#ff2e88; --cyan:#22e3ff; --yel:#ffd23f; --ink:#eef0ff; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:'VT323',monospace;position:relative}
+/* scanlines + vignette */
+body::before{content:"";position:fixed;inset:0;z-index:99;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);mix-blend-mode:multiply;opacity:.55}
+body::after{content:"";position:fixed;inset:0;z-index:98;pointer-events:none;
+  background:radial-gradient(120% 80% at 50% 40%,transparent 55%,rgba(0,0,0,.7))}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+a{color:inherit;text-decoration:none}
+.px{font-family:'Press Start 2P',monospace}
+@keyframes blink{50%{opacity:.18}}
+.blink{animation:blink 1s steps(1) infinite}
+
+/* nav */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 24px}
+.brand{font-family:'Press Start 2P';font-size:14px;color:var(--cyan);text-shadow:0 0 8px rgba(34,227,255,.6)}
+.brand .d{color:var(--mag)}
+.coin{font-family:'Press Start 2P';font-size:9px;color:#0a0a14;background:var(--yel);padding:11px 13px;border:3px solid #0a0a14;box-shadow:4px 4px 0 var(--mag)}
+.coin:hover{box-shadow:2px 2px 0 var(--mag);transform:translate(2px,2px)}
+
+/* hero */
+.hero{text-align:center;padding:62px 0 34px}
+.attract{font-family:'Press Start 2P';font-size:11px;color:var(--yel);letter-spacing:.1em;margin-bottom:30px}
+h1{font-family:'Press Start 2P';font-size:clamp(20px,4.4vw,52px);line-height:1.35;text-transform:uppercase;overflow-wrap:anywhere;
+  color:#fff;text-shadow:0 0 10px rgba(255,46,136,.7),4px 4px 0 var(--mag),-2px -2px 0 var(--cyan)}
+h1 .c{color:var(--cyan);text-shadow:0 0 14px rgba(34,227,255,.9),3px 3px 0 #06121a}
+.sup{font-size:30px;color:var(--ink);margin-top:26px;letter-spacing:.04em}
+.sup b{color:var(--yel)}
+.btns{display:flex;gap:16px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.btn{font-family:'Press Start 2P';font-size:11px;padding:15px 18px;border:3px solid #0a0a14;cursor:pointer}
+.btn.mag{background:var(--mag);color:#0a0a14;box-shadow:5px 5px 0 var(--cyan)}
+.btn.cy{background:var(--cyan);color:#06121a;box-shadow:5px 5px 0 var(--mag)}
+.btn:hover{transform:translate(3px,3px)}
+.btn.mag:hover{box-shadow:2px 2px 0 var(--cyan)}.btn.cy:hover{box-shadow:2px 2px 0 var(--mag)}
+
+/* loop */
+.loop{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;padding:30px 0 14px;font-family:'Press Start 2P';font-size:clamp(11px,2.2vw,18px)}
+.loop .s{color:var(--mag)}.loop .g{color:var(--cyan)}.loop .h{color:var(--yel)}
+.loop .arr{color:#5a5a78}
+
+/* cabinet grid */
+.sel{padding:34px 0 20px;text-align:center}
+.sel .lbl{font-family:'Press Start 2P';font-size:11px;color:var(--yel);margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media(max-width:820px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cab{border:3px solid var(--cyan);background:var(--bg2);padding:7px;box-shadow:0 0 0 3px #0a0a14, 6px 6px 0 rgba(255,46,136,.45);transition:transform .12s}
+.cab:nth-child(even){border-color:var(--mag);box-shadow:0 0 0 3px #0a0a14,6px 6px 0 rgba(34,227,255,.45)}
+.cab img{width:100%;aspect-ratio:16/11;object-fit:cover;display:block;image-rendering:auto}
+.cab:hover{transform:translateY(-5px)}
+
+/* differentiator */
+.recpt{text-align:center;padding:42px 0;margin-top:14px}
+.recpt h2{font-family:'Press Start 2P';font-size:clamp(13px,2.8vw,26px);color:#fff;text-shadow:0 0 10px rgba(255,210,63,.6),3px 3px 0 var(--yel)}
+.recpt .ok{color:var(--cyan)}
+
+footer{text-align:center;padding:30px 0 46px;font-family:'Press Start 2P';font-size:10px;color:#6f6f96;letter-spacing:.08em}
+footer .y{color:var(--yel)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="brand">LAUNCH<span class="d blink">_</span>MARKET</div>
+  <a class="coin" href="#">SUBMIT A PROMPT</a>
+</nav>
+
+<header class="hero wrap">
+  <div class="attract blink">* PLAYER 1 - INSERT IDEA *</div>
+  <h1>The <span class="c">crowd</span> decides which AI games get made.</h1>
+  <div class="sup">Back it <b>before</b> it's built.</div>
+  <div class="btns">
+    <a class="btn mag" href="#">BROWSE CANDIDATES</a>
+    <a class="btn cy" href="#">SUBMIT A PROMPT</a>
+  </div>
+</header>
+
+<div class="loop wrap">
+  <span class="s">PITCH</span><span class="arr">&gt;</span><span class="g">GREENLIGHT</span><span class="arr">&gt;</span><span class="h">SHIP</span>
+</div>
+
+<section class="sel wrap">
+  <div class="lbl blink">- SELECT A CANDIDATE -</div>
+  <div class="grid">
+    <div class="cab"><img src="../landing-assets/merge_conquest.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/devourling.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/parry_knight.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/backrooms.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/beast_bazaar.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/boba_rush.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/power_wash.png" alt=""></div>
+    <div class="cab"><img src="../landing-assets/coin_cascade.png" alt=""></div>
+  </div>
+</section>
+
+<section class="recpt wrap">
+  <h2>GREENLIGHT, WITH <span class="ok">RECEIPTS</span></h2>
+</section>
+
+<footer>TESTNET <span class="y">.</span> SANDBOX <span class="y">.</span> NO SLOP</footer>
+</body>
+</html>
