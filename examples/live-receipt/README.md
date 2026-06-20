@@ -14,8 +14,8 @@ the actual artifacts; the links below are live right now.
 
 ## Verify it yourself (all live on testnet)
 
-- Candidate manifest blob (Walrus):
-  `https://aggregator.walrus-testnet.walrus.space/v1/blobs/BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow`
+- Candidate manifest blob (Walrus), byte-equivalent to `candidate.json` in this folder:
+  `https://aggregator.walrus-testnet.walrus.space/v1/blobs/sj22pKMfLz4nAzThcuLFucksRpmYhFDegDvcw3W08mE`
 - Codeplain-gated validation report blob (Walrus):
   `https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4`
 - Sui object (owned by the registry), on Suiscan:
