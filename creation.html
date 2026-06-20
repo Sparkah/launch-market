@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Market // create</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090a; --bg2:#0b1410; --green:#39ff7a; --green-mid:#2aa564; --green-dim:#1f6b3e; --amber:#ffb347; --blue:#7fd4ff;
+  --line:rgba(57,255,122,.26); --line2:rgba(57,255,122,.5); --gray:#6b7263;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--green);font-family:var(--mono);font-size:15px;line-height:1.6;
+  min-height:100vh;text-shadow:0 0 6px rgba(57,255,122,.22);
+  background-image:linear-gradient(rgba(57,255,122,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,122,.02) 1px,transparent 1px);background-size:34px 34px}
+body::after{content:"";position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.45;background:repeating-linear-gradient(rgba(7,9,10,0) 0 2px,rgba(0,0,0,.26) 2px 3px)}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+a{color:inherit}
+.cur{display:inline-block;width:.6em;height:1.05em;background:var(--green);margin-left:.1em;vertical-align:-.16em;box-shadow:0 0 10px var(--green);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.bar{position:sticky;top:0;z-index:10;background:linear-gradient(var(--bg),rgba(7,9,10,.82));backdrop-filter:blur(5px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;justify-content:space-between;height:52px;font-size:13px}
+.bar .mark{font-weight:700}.bar .mark .sl{color:var(--green-mid)}
+.credits{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--green-mid)}
+.credits b{color:var(--green)}
+.tog{cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:4px 9px;color:var(--green-mid);user-select:none}
+.tog:hover{border-color:var(--line2);color:var(--green)}
+
+.hero{padding:46px 0 8px}
+.cmd{color:var(--green-mid);font-size:13px;margin-bottom:14px}
+.cmd .p{color:var(--green-dim)}
+h1{font-size:clamp(28px,5.2vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.05;overflow-wrap:anywhere}
+
+.step{padding:30px 0;border-top:1px solid var(--line);margin-top:30px}
+.step.off{opacity:.32;pointer-events:none;filter:saturate(.4)}
+.step-h{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:16px}
+.step-h b{color:var(--green)}
+
+.choices{display:flex;gap:14px;flex-wrap:wrap}
+.choice{flex:1;min-width:200px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg2);padding:22px 20px;cursor:pointer;transition:.16s}
+.choice:hover{border-color:var(--line2);transform:translateY(-2px)}
+.choice.sel{border-color:var(--green);box-shadow:0 0 22px rgba(57,255,122,.18),inset 0 0 20px rgba(57,255,122,.06)}
+.choice b{font-size:22px;font-weight:800}
+.choice span{display:block;color:var(--green-mid);font-size:13px;margin-top:6px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.grid{grid-template-columns:1fr}}
+.preset{border:1.5px solid var(--line);border-radius:11px;background:var(--bg2);padding:15px 15px 13px;cursor:pointer;transition:.16s;display:flex;flex-direction:column;gap:9px}
+.preset:hover{border-color:var(--line2);transform:translateY(-2px)}
+.preset.sel{border-color:var(--green);box-shadow:0 0 20px rgba(57,255,122,.16),inset 0 0 18px rgba(57,255,122,.05)}
+.preset .pn{font-size:16.5px;font-weight:800}
+.preset .pl{font-size:11.5px;color:var(--green-dim)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.tag{font-size:10.5px;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--green-mid)}
+.tag.dim{color:var(--blue);border-color:rgba(127,212,255,.4)}
+.tag.builder{color:var(--amber);border-color:rgba(255,179,71,.4)}
+.tag.eng{color:#04130a;background:var(--green);border:none;font-weight:700}
+.tag.eng.f{background:transparent;color:var(--green-mid);border:1px solid var(--line)}
+.tag.hot{color:#ff6b5e;border-color:rgba(255,107,94,.55);font-weight:700}
+
+.make{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+.make input{flex:1;min-width:240px;background:var(--bg2);border:1.5px solid var(--line);color:var(--green);font-family:var(--mono);font-size:15px;padding:15px 18px;border-radius:11px;outline:none}
+.make input:focus{border-color:var(--green)}
+.make input::placeholder{color:var(--green-dim)}
+.btn{font-family:var(--mono);font-weight:700;font-size:15px;padding:15px 26px;border:1px solid var(--line2);color:var(--green);background:rgba(57,255,122,.08);cursor:pointer;border-radius:11px;transition:.16s;white-space:nowrap}
+.btn:hover:not(:disabled){background:var(--green);color:#04130a;text-shadow:none;box-shadow:0 0 24px rgba(57,255,122,.45)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.route{margin-top:16px;font-size:13px;color:var(--green-mid);min-height:22px}
+.route b{color:var(--green)}.route .f{color:var(--amber)}
+
+.out{margin-top:18px;border:1px solid var(--line);border-radius:12px;background:#0c0f07;padding:18px 20px;font-size:13.5px;line-height:2;display:none}
+.out.show{display:block}
+.out .ln{color:var(--green-mid)}
+.out .ln .g{color:var(--green)}.out .ln .a{color:var(--amber)}
+.out .lnk{color:var(--blue);text-decoration:underline;word-break:break-all}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0 60px;color:var(--green-dim);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap bar-in">
+  <span class="mark">launch_market<span class="sl"> // </span>create</span>
+  <span class="credits">codeplain credits: <b id="credN">27</b> <span class="tog" id="credTog">toggle empty</span></span>
+</div></div>
+
+<header class="wrap hero">
+  <p class="cmd"><span class="p">~/launch_market $</span> create --new</p>
+  <h1>Vibe a game.<br>We build it.<span class="cur"></span></h1>
+</header>
+
+<section class="wrap step" id="s1">
+  <div class="step-h">step 1 <b>/ flat or deep?</b></div>
+  <div class="choices">
+    <div class="choice" data-dim="2D"><b>2D</b><span>canvas. fast, snackable, instant to play.</span></div>
+    <div class="choice" data-dim="3D"><b>3D</b><span>Three.js + physics. worlds, racers, sandboxes.</span></div>
+  </div>
+</section>
+
+<section class="wrap step off" id="s2">
+  <div class="step-h">step 2 <b>/ pick a preset</b>  -  a starting point, not a cage</div>
+  <div class="grid" id="presetGrid"></div>
+</section>
+
+<section class="wrap step off" id="s3">
+  <div class="step-h">step 3 <b>/ describe your twist</b></div>
+  <div class="make">
+    <input id="prompt" type="text" maxlength="120" placeholder="e.g. a merge game where the pieces are hungry cats">
+    <button class="btn" id="go" disabled>Generate</button>
+  </div>
+  <div class="route" id="route"></div>
+  <div class="out" id="out"></div>
+</section>
+
+<footer class="wrap">codeplain builds the logic when credits exist, the factory always renders, 3D always falls back to the factory. same game, different engine underneath.</footer>
+
+<script>
+const PRESETS = [
+  // 2D — codeplain-suitable (logic-driven). hot = trending in 2026.
+  {name:'Match-3',       like:'like Royal Match / Candy Crush', dim:'2D', builder:true,  cp:true, hot:true},
+  {name:'Brainrot',      like:'like Steal a Brainrot',          dim:'2D', builder:false, cp:true, hot:true},
+  {name:'Beatbox',       like:'like Incredibox / Sprunki',      dim:'2D', builder:false, cp:true, hot:true},
+  {name:'Deckbuilder',   like:'like Balatro',                   dim:'2D', builder:false, cp:true, hot:true},
+  {name:'Garden Sim',    like:'like Grow a Garden',             dim:'2D', builder:true,  cp:true, hot:true},
+  {name:'Tycoon',        like:'idle empire, cash multipliers',  dim:'2D', builder:true,  cp:true, hot:true},
+  {name:'Merge',         like:'like 2048 / Suika',              dim:'2D', builder:false, cp:true},
+  {name:'Survivor',      like:'like Vampire Survivors',         dim:'2D', builder:false, cp:true},
+  {name:'Idle',          like:'incremental, numbers go up',     dim:'2D', builder:false, cp:true},
+  {name:'Tower Defense', like:'lanes, waves, towers',           dim:'2D', builder:true,  cp:true},
+  {name:'IO Arena',      like:'like slither.io / agar.io',      dim:'2D', builder:false, cp:true},
+  {name:'Platformer',    like:'run, jump, collect',             dim:'2D', builder:true,  cp:true},
+  {name:'Arcade',        like:'dodge / shoot / score',          dim:'2D', builder:false, cp:true},
+  // 3D — factory (Three.js); codeplain stays on logic, not canvases
+  {name:'Survival',      like:'like Palworld / ARK',            dim:'3D', builder:true,  cp:false, hot:true},
+  {name:'Voxel Sandbox', like:'like Minecraft',                 dim:'3D', builder:true,  cp:false, hot:true},
+  {name:'Social Worlds', like:'like Roblox',                    dim:'3D', builder:true,  cp:false, hot:true},
+  {name:'Obby',          like:'like Tower of Hell',             dim:'3D', builder:true,  cp:false, hot:true},
+  {name:'Roleplay World',like:'like Brookhaven / Adopt Me',     dim:'3D', builder:true,  cp:false},
+  {name:'Kart Racer',    like:'like Mario Kart',                dim:'3D', builder:false, cp:false},
+  {name:'Physics Merge', like:'throw + merge, 3D',              dim:'3D', builder:false, cp:false},
+];
+
+const st = {dim:null, preset:null, credits:27};
+
+function engineFor(p){
+  if(!p) return null;
+  if(p.cp && st.credits>0) return {id:'codeplain', label:'Codeplain', fallback:false};
+  if(p.cp && st.credits<=0) return {id:'factory', label:'Factory (default)', fallback:true};
+  return {id:'factory3d', label:p.dim==='3D'?'Factory 3D':'Factory', fallback:false};
+}
+
+const $ = s => document.querySelector(s);
+const credN = $('#credN');
+
+document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));
+  c.classList.add('sel'); st.dim=c.dataset.dim; st.preset=null;
+  $('#s2').classList.remove('off'); $('#s3').classList.add('off'); $('#go').disabled=true; $('#out').classList.remove('show'); $('#route').innerHTML='';
+  renderPresets();
+}));
+
+function renderPresets(){
+  const g = $('#presetGrid'); g.innerHTML='';
+  PRESETS.filter(p=>p.dim===st.dim).forEach(p=>{
+    const eng = engineFor(p);
+    const el = document.createElement('div'); el.className='preset';
+    el.innerHTML = `<div class="pn">${p.name}${p.hot?' <span class="tag hot">hot</span>':''}</div><div class="pl">${p.like}</div>
+      <div class="tags">
+        <span class="tag dim">${p.dim}</span>
+        ${p.builder?'<span class="tag builder">+ level builder</span>':''}
+        <span class="tag eng ${eng.id==='codeplain'?'':'f'}">${eng.label}</span>
+      </div>`;
+    el.addEventListener('click',()=>{
+      document.querySelectorAll('.preset').forEach(x=>x.classList.remove('sel'));
+      el.classList.add('sel'); st.preset=p;
+      $('#s3').classList.remove('off'); $('#go').disabled=false; $('#out').classList.remove('show');
+      showRoute();
+    });
+    g.appendChild(el);
+  });
+}
+
+function showRoute(){
+  const p=st.preset; if(!p){$('#route').innerHTML='';return;}
+  const e=engineFor(p);
+  let msg = e.id==='codeplain'
+    ? `engine: <b>Codeplain</b> &rarr; renders <b>${p.name.toLowerCase()}.plain</b> into the game logic, factory renders it.`
+    : e.fallback
+      ? `engine: <span class="f">Factory (default)</span>  -  out of codeplain credits, so the factory builds it directly.`
+      : `engine: <span class="f">Factory 3D</span>  -  3D needs the engine, codeplain stays on logic, not canvases.`;
+  if(p.builder) msg += ` includes a <b>level builder</b>.`;
+  $('#route').innerHTML = msg;
+}
+
+$('#credTog').addEventListener('click',()=>{
+  st.credits = st.credits>0 ? 0 : 27; credN.textContent = st.credits;
+  if(st.dim) renderPresets(); showRoute();
+});
+
+$('#go').addEventListener('click',()=>{
+  const p=st.preset, e=engineFor(p), prompt=$('#prompt').value.trim()||`a ${p.name.toLowerCase()} game`;
+  const out=$('#out'); out.classList.add('show');
+  const cap = s=>s.replace(/[^a-z0-9 ]/gi,' ').trim().split(/\s+/).slice(0,3).map(w=>w[0]?w[0].toUpperCase()+w.slice(1):'').join(' ')||'Untitled';
+  const id='gf-lm-'+Math.floor(1e5+ (prompt.length*7919)%9e5).toString(36);
+  const lines=[
+    `<span class="ln"><span class="p">~/launch_market $</span> create "${prompt}"</span>`,
+    `<span class="ln">candidate <span class="g">${id}</span> &middot; preset <span class="g">${p.name}</span> &middot; ${p.dim}</span>`,
+    e.id==='codeplain'
+      ? `<span class="ln">building logic via <span class="g">Codeplain</span> (${p.name.toLowerCase()}.plain) ... factory rendering ...</span>`
+      : e.fallback
+        ? `<span class="ln">no credits &middot; building via <span class="a">factory (default)</span> ...</span>`
+        : `<span class="ln">building via <span class="a">factory 3D</span> (Three.js) ...</span>`,
+    `<span class="ln">gate: <span class="g">passed</span> &middot; receipt anchored on Walrus + Sui</span>`,
+    `<span class="ln">&rarr; <span class="g">${cap(prompt)}</span> queued for greenlight. the crowd votes next.</span>`,
+  ];
+  out.innerHTML=''; let i=0;
+  (function tick(){ if(i<lines.length){ out.innerHTML+=lines[i]+'<br>'; i++; setTimeout(tick, 520);} })();
+});
+</script>
+</body>
+</html>

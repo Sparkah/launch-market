@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090a; --panel:#0b1410; --green:#39ff7a; --green2:#9bd400; --dim:#2aa564; --faint:#1f6b3e;
+  --amber:#ffb347; --amber-dim:#7a5a1f;
+  --line:rgba(57,255,122,.26); --line2:rgba(57,255,122,.5);
+  --gray-bd:#33392f; --gray-tx:#6b7263; --gray-hd:#8c9380; --gray-bg:#0c0e0b;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--green);font-family:var(--mono);width:1480px;
+  background-image:linear-gradient(rgba(57,255,122,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,122,.022) 1px,transparent 1px);
+  background-size:34px 34px}
+.wrap{padding:38px 44px 30px}
+header{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px}
+h1{font-size:34px;font-weight:800;letter-spacing:-.02em;text-shadow:0 0 14px rgba(57,255,122,.4)}
+h1 .sub{display:block;font-size:14px;font-weight:400;color:var(--dim);margin-top:6px}
+.legend{display:flex;gap:20px;font-size:12.5px;align-items:center;color:var(--dim)}
+.legend i{font-style:normal;display:inline-flex;align-items:center;gap:7px}
+.dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+.dot.strong{background:var(--green);box-shadow:0 0 8px var(--green)}
+.dot.stretch{background:var(--amber)}
+.dot.have{color:var(--green)}
+
+/* main prize banner */
+.banner{border:1.6px solid var(--line2);border-radius:12px;background:var(--panel);padding:18px 22px;margin-bottom:18px;
+  box-shadow:0 0 24px rgba(57,255,122,.10),inset 0 0 24px rgba(57,255,122,.05);display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:center}
+.banner .bh b{font-size:21px;font-weight:800}
+.banner .bh span{display:block;font-size:12px;color:var(--dim);margin-top:5px}
+.banner .brow{display:flex;gap:30px}
+.banner .col .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--green2);margin-bottom:6px}
+.banner .col .v{font-size:13px;color:var(--dim);line-height:1.5}
+.banner .col .v.miss{color:var(--amber)}
+
+/* grid of sponsor cards */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{border:1.6px solid var(--line);border-radius:12px;background:var(--panel);padding:17px 18px;display:flex;flex-direction:column;gap:11px}
+.card.strong{border-color:var(--line2);box-shadow:inset 0 0 22px rgba(57,255,122,.05)}
+.card.stretch{border-color:var(--amber-dim)}
+.card-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:9px}
+.card-h b{font-size:18px;font-weight:800}
+.card.stretch .card-h b{color:var(--amber)}
+.prize{font-size:11px;color:var(--faint);text-align:right;line-height:1.35;max-width:170px}
+.wants{font-size:12px;color:var(--gray-hd);line-height:1.45}
+.wants em{color:var(--dim);font-style:normal}
+.sec .lab{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.sec.h .lab{color:var(--green2)}
+.sec.m .lab{color:var(--gray-tx)}
+ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+li{font-size:12px;line-height:1.4;padding-left:16px;position:relative}
+.sec.h li{color:var(--green)}
+.sec.h li::before{content:"+";position:absolute;left:0;color:var(--green);font-weight:700}
+.sec.m li{color:var(--gray-tx)}
+.sec.m li::before{content:"\2192";position:absolute;left:0;color:var(--gray-tx)}
+
+/* dropped card */
+.card.drop{border-style:dashed;border-color:var(--gray-bd);background:var(--gray-bg);justify-content:flex-start}
+.card.drop .card-h b{color:var(--gray-hd)}
+.card.drop .d{font-size:12px;color:var(--gray-tx);line-height:1.5;margin-bottom:8px}
+.card.drop .d s{color:#4a5043}
+
+footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim)}
+footer b{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>LAUNCH MARKET  -  win conditions<span class="sub">what each sponsor wants &middot; what we already have &middot; what is missing to win</span></h1>
+    <div class="legend">
+      <i><span class="dot strong"></span> winnable</i>
+      <i><span class="dot stretch"></span> stretch</i>
+      <i><span style="color:var(--green);font-weight:700">+</span> have</i>
+      <i><span style="color:var(--gray-tx)">&rarr;</span> missing</i>
+    </div>
+  </header>
+
+  <div class="banner">
+    <div class="bh"><b>Main prize</b><span>the real one &middot; no bounty required to win it</span></div>
+    <div class="brow">
+      <div class="col"><div class="lab">wants</div><div class="v">creativity &middot; technical skill &middot; usability &middot; startup potential</div></div>
+      <div class="col"><div class="lab">have</div><div class="v">a novel thesis (the accessible front door to Sui gaming) &middot; a real factory + 175 games &middot; live Codeplain, Walrus, Sui</div></div>
+      <div class="col"><div class="lab">missing</div><div class="v miss">the live loop demo: feed &rarr; play &rarr; silent Sui. THE priority.</div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- Codeplain -->
+    <div class="card strong">
+      <div class="card-h"><b>Codeplain</b><span class="prize">&pound;1,000 + $500 credits / head</span></div>
+      <div class="wants"><em>wants:</em> codeplain as your primary dev tool; public repo with .plain files + configs</div>
+      <div class="sec h"><div class="lab">have</div><ul><li>gate_spec.plain renders the validation gate</li><li>7/7 vs an external acceptance harness</li><li>build_gate.sh + CODEPLAIN.md, repo-ready</li></ul></div>
+      <div class="sec m"><div class="lab">missing</div><ul><li>push the repo public</li><li>push more of the build through .plain to justify "primary"</li></ul></div>
+    </div>
+
+    <!-- Solvimon -->
+    <div class="card strong">
+      <div class="card-h"><b>Solvimon</b><span class="prize">4K monitor + TRMNL eInk kit</span></div>
+      <div class="wants"><em>wants:</em> most likely to become a successful business</div>
+      <div class="sec h"><div class="lab">have</div><ul><li>grounded Moons economy: free / earn / pay / subscribe</li><li>factory moat + 175 games shipped</li><li>3 revenue lines; Lovable-validated pricing</li></ul></div>
+      <div class="sec m"><div class="lab">missing</div><ul><li>a 1-page business case</li><li>real traction numbers from the gallery</li></ul></div>
+    </div>
+
+    <!-- Sui -->
+    <div class="card strong">
+      <div class="card-h"><b>Sui</b><span class="prize">Mac Mini M4 / 6mo Claude Max</span></div>
+      <div class="wants"><em>wants:</em> an AI-native app on Sui using DeepBook &amp; Walrus</div>
+      <div class="sec h"><div class="lab">have</div><ul><li>Walrus receipts live (testnet)</li><li>Sui registry objects live + verified</li><li>AI-native factory; accessibility = Sui's real need</li></ul></div>
+      <div class="sec m"><div class="lab">missing</div><ul><li>DeepBook (explicit req: Moons-token + pool, or partial)</li><li>zkLogin live (needs Enoki keys)</li><li>the loop that shows the accessibility</li></ul></div>
+    </div>
+
+    <!-- BGA -->
+    <div class="card stretch">
+      <div class="card-h"><b>BGA</b><span class="prize">Mac Mini</span></div>
+      <div class="wants"><em>wants:</em> AI trading / portfolio / strategy tools for fairer, more transparent markets</div>
+      <div class="sec h"><div class="lab">have</div><ul><li>a transparent market for game capital</li><li>Moons allocated on public on-chain gated evidence</li><li>Darwinian: only proven demand gets funded, not hype</li></ul></div>
+      <div class="sec m"><div class="lab">missing</div><ul><li>a backer portfolio / allocation tool (pick candidates, stake Moons)</li><li>frame the greenlight as the strategy surface</li><li>weakest fit  -  lean hard on fairness + transparency</li></ul></div>
+    </div>
+
+    <!-- Bilt -->
+    <div class="card stretch">
+      <div class="card-h"><b>Bilt.me</b><span class="prize">Apple Dev acct + 3mo Bilt</span></div>
+      <div class="wants"><em>wants:</em> a working mobile app on bilt.me; real-world signal (find / use / pay), not just a demo</div>
+      <div class="sec h"><div class="lab">have</div><ul><li>the feed is mobile-first by design (portrait)</li><li>175 games + real gallery players = real signal</li><li>the pay story (Moons + subscriptions)</li></ul></div>
+      <div class="sec m"><div class="lab">missing</div><ul><li>build it on bilt.me specifically</li><li>show real usage numbers</li><li>demonstrate find &rarr; use &rarr; pay</li></ul></div>
+    </div>
+
+    <!-- Dropped -->
+    <div class="card drop">
+      <div class="card-h"><b>Dropped</b><span class="prize">not worth bending the product</span></div>
+      <div class="d"><b style="color:var(--gray-hd)">Vercel</b>  -  only a free deploy. Grab it in 5 min if we host the page there. Nothing to bend.</div>
+      <div class="d"><b style="color:var(--gray-hd)">FLock</b>  -  <s>UK Sovereign AI via FLock APIs</s>. Orthogonal to a game platform. No real use. Skip.</div>
+    </div>
+  </div>
+
+  <footer>
+    <span>thesis: <b>the accessible front door to Sui gaming</b>  -  instant casual games, Google login, you are on Sui without knowing it</span>
+    <span>keep: <b>Codeplain &middot; Solvimon &middot; Sui &middot; BGA &middot; Bilt</b></span>
+  </footer>
+</div>
+</body>
+</html>

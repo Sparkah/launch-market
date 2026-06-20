@@ -16,3 +16,4 @@ vite.config.d.ts
 __pycache__/
 *.pyc
 .sui_registry.key
+.enoki.env

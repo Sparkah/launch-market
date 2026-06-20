@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090a; --panel:#0b1410; --green:#39ff7a; --green2:#9bd400; --dim:#2aa564; --faint:#1f6b3e;
+  --amber:#ffb347; --blue:#7fd4ff;
+  --line:rgba(57,255,122,.26); --line2:rgba(57,255,122,.5);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--green);font-family:var(--mono);width:1480px;
+  background-image:linear-gradient(rgba(57,255,122,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,122,.022) 1px,transparent 1px);background-size:34px 34px}
+.wrap{padding:40px 46px 32px}
+header{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px}
+h1{font-size:36px;font-weight:800;letter-spacing:-.02em;text-shadow:0 0 14px rgba(57,255,122,.4)}
+h1 .sub{display:block;font-size:14px;font-weight:400;color:var(--dim);margin-top:6px}
+.tagpill{font-size:12.5px;color:var(--green2);border:1px solid var(--line2);border-radius:999px;padding:7px 15px}
+
+.wedge{border:1.6px solid var(--line2);border-radius:13px;background:var(--panel);padding:20px 24px;margin-bottom:18px;
+  box-shadow:0 0 24px rgba(57,255,122,.1),inset 0 0 24px rgba(57,255,122,.05)}
+.wedge .lab{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green2);margin-bottom:9px}
+.wedge p{font-size:19px;line-height:1.5}
+.wedge .hl{color:var(--amber);font-weight:700}
+.wedge .g{color:var(--green);font-weight:700}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{border:1.6px solid var(--line);border-radius:13px;background:var(--panel);padding:20px 20px 18px;display:flex;flex-direction:column;gap:12px}
+.card .ch{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green2);border-bottom:1px solid var(--line);padding-bottom:10px}
+.row{display:flex;gap:10px;align-items:baseline;font-size:14px;line-height:1.4}
+.row .k{color:var(--green);font-weight:700;min-width:14px}
+.row .t{color:var(--dim)}
+.row .t b{color:var(--green)}
+.row.hot .t b{color:var(--amber)}
+.note{margin-top:auto;font-size:12px;color:var(--faint);border-top:1px dashed var(--line);padding-top:10px;line-height:1.5}
+
+.flyw{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;font-weight:700;line-height:1.9}
+.flyw .n{color:var(--green)}
+.flyw .a{color:var(--dim)}
+.big{font-size:15px;line-height:1.5;color:var(--dim)}
+.big b{color:var(--green)}
+.big .up{color:var(--amber);font-weight:700}
+
+.endgame{margin-top:18px;border:1.6px solid var(--line2);border-radius:13px;padding:20px 24px;
+  background:radial-gradient(700px 200px at 30% -40%, rgba(57,255,122,.12), transparent), var(--panel)}
+.endgame .lab{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green2);margin-bottom:8px}
+.endgame p{font-size:18px;line-height:1.5}
+.endgame .g{color:var(--green);font-weight:700}
+
+footer{margin-top:20px;border-top:1px solid var(--line);padding-top:15px;font-size:14px;color:var(--green);text-align:center;line-height:1.5}
+footer b{color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>LAUNCH MARKET  -  the business<span class="sub">Solvimon track &middot; most likely to become a real business</span></h1>
+    <span class="tagpill">kids play &middot; parents pay &middot; margins improve at scale</span>
+  </header>
+
+  <div class="wedge">
+    <div class="lab">the wedge</div>
+    <p>Roblox proved it: <span class="hl">kids play, parents pay</span>  -  a multi-billion-dollar UGC game economy. But Roblox makes you learn Studio. We delete the barrier: <span class="g">a game from one sentence.</span> Same economics, infinite AI supply, real ownership.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="ch">how it makes money</div>
+      <div class="row hot"><span class="k">1</span><span class="t"><b>In-game add-ons</b>  -  kids play, parents pay. The proven micro-purchase loop. <i>(validated)</i></span></div>
+      <div class="row"><span class="k">2</span><span class="t"><b>$2/mo add-on pass</b>  -  low price, recurring, enormous volume.</span></div>
+      <div class="row"><span class="k">3</span><span class="t"><b>Creator subscriptions</b>  -  Pro $25 / Studio $50, plus Moons.</span></div>
+      <div class="row"><span class="k">4</span><span class="t"><b>Platform take-rate</b> + graduation profit-share on the hits.</span></div>
+      <div class="note">architecture: every game ships monetization hooks by default. the whole catalog earns, no per-game work.</div>
+    </div>
+
+    <div class="card">
+      <div class="ch">if it goes very well</div>
+      <div class="flyw">
+        <span class="n">players</span><span class="a">&rarr;</span><span class="n">plays</span><span class="a">&rarr;</span><span class="n">Moons</span><span class="a">&rarr;</span><span class="n">more games</span><span class="a">&rarr;</span><span class="n">more players</span><span class="a">&#8635;</span>
+      </div>
+      <div class="big">A self-feeding flywheel. <b>Supply scales with compute, not headcount</b>  -  a thousand games a day. No studio can match that.</div>
+      <div class="note">network effects on both sides: more players pull more creators, more creators pull more players.</div>
+    </div>
+
+    <div class="card">
+      <div class="ch">the moat: margins invert</div>
+      <div class="big">Today each build is an API call  -  real compute cost.</div>
+      <div class="big">At scale we <b>deploy our own models</b> for the common preset types  -  cost per build <span class="up">collapses</span>.</div>
+      <div class="big">A content business pays <b>more</b> humans as it grows. We pay <span class="up">less per game</span> as we grow.</div>
+      <div class="note">margin expands with scale. that inversion is the defensible part.</div>
+    </div>
+  </div>
+
+  <div class="endgame">
+    <div class="lab">the endgame</div>
+    <p>The default place normal people make and play games. An <span class="g">AI-native Roblox</span>: Roblox's economics, infinite AI-generated supply, and on-chain ownership so creators truly own and earn.</p>
+  </div>
+
+  <footer>
+    Roblox's <b>kids-play-parents-pay</b> economy, minus the Studio learning curve  -  with AI supply and margins that get better at scale.
+  </footer>
+</div>
+</body>
+</html>
