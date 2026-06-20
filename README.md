@@ -7,6 +7,7 @@ a verifiable Walrus + Sui + DeepBook receipt before the crowd greenlights it.
 
 - Live demo: https://launch-market-wheat.vercel.app
 - Public repo: https://github.com/Sparkah/launch-market
+- Bilt mobile app (companion): https://try.myiosapp.link/OrUtIQA
 
 Sui gaming has world-class rails and almost no players. We are the on-ramp:
 instant casual games as the front door, on-chain ownership as the reason to stay.
@@ -30,6 +31,8 @@ instant casual games as the front door, on-chain ownership as the reason to stay
 - **Solvimon:** the Moons economy (30 plays = 1 build), Pro/Studio subscriptions,
   in-game add-ons (kids play, parents pay), and graduation profit-share. See
   `launch_market_vision.png`.
+- **Bilt:** a native mobile companion built on bilt.me (TikTok-style feed + WebView game
+  play), the mobile acquisition front for creators and backers.
 - **Vercel:** the whole demo is a static site deployed on Vercel (the live URL above).
 
 ## How a candidate works

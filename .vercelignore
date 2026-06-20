@@ -22,3 +22,7 @@ dist-codeplain
 plain_modules
 conformance_tests
 src
+worker
+scorecard.html
+diagram.html
+_*.html

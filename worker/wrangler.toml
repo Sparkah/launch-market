@@ -1,0 +1,8 @@
+name = "launch-market-games"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "GAMES"
+id = "ab4a7502624a4889ac9581f98304e370"

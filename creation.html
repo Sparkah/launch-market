@@ -127,9 +127,18 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0 60px;colo
 
 <footer class="wrap">codeplain builds the logic when credits exist, the factory always renders, 3D always falls back to the factory. same game, different engine underneath.</footer>
 </div>
+<div class="gplay" id="gplay" style="position:absolute;inset:0;z-index:60;background:#000;display:none;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0a0d0a;border-bottom:1px solid var(--line)">
+    <button id="gback" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--green);background:transparent;border:1px solid var(--line2);border-radius:8px;padding:6px 12px;cursor:pointer">&#8249; back</button>
+    <span id="gt" style="font-size:13px;color:var(--ink)"></span>
+  </div>
+  <iframe id="gframe" title="your game" allow="autoplay" style="flex:1;width:100%;border:0;background:#000"></iframe>
+</div>
 </div>
 
+<script src="gen.js"></script>
 <script>
+const WORKER='https://launch-market-games.timofeymarkin98.workers.dev';
 const PRESETS = [
   // 2D — codeplain-suitable (logic-driven). hot = trending in 2026.
   {name:'Match-3',       like:'like Royal Match / Candy Crush', dim:'2D', builder:true,  cp:true, hot:true},
@@ -227,17 +236,24 @@ $('#go').addEventListener('click',()=>{
         : `<span class="ln">building via <span class="a">factory 3D</span> (Three.js) ...</span>`,
     `<span class="ln">gate: <span class="g">passed</span> &middot; receipt: <a class="g" style="text-decoration:underline" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4" target="_blank" rel="noopener">Walrus blob</a> + <a class="g" style="text-decoration:underline" href="https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0" target="_blank" rel="noopener">Sui object</a></span>`,
     `<span class="ln" style="opacity:.6">(live example from a real run &middot; full pipeline in runner/run_job.py)</span>`,
-    `<span class="ln">&rarr; <span class="g">${cap(prompt)}</span> queued for greenlight. the crowd votes next.</span>`,
+    `<span class="ln">&rarr; <span class="g">${cap(prompt)}</span> built &amp; playable. publishing to the greenlight feed ...</span>`,
   ];
   out.innerHTML=''; let i=0;
   setTimeout(function(){ try{ out.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} }, 80);
   (function tick(){
     if(i<lines.length){ out.innerHTML+=lines[i]+'<br>'; i++; setTimeout(tick, 520); }
     else {
+      var game = LMGen.generate(prompt);
       out.innerHTML += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'
-        + '<div class="ln" style="color:var(--ink)">In the greenlight queue. The crowd votes next and the top picks get built, demand builds the game, not an instant render.</div>'
-        + '<a href="loop.html" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-weight:800;color:#04130a;background:var(--green);border-radius:10px;padding:11px 18px;text-decoration:none">&#9654; Play the live feed</a>'
-        + '</div>';
+        + '<div class="ln" style="color:var(--ink)">&#10003; <b>'+game.title+'</b> is playable now (' + game.mechanic + ').</div>'
+        + '<div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">'
+        + '<button id="playmine" style="font-family:var(--mono);font-weight:800;font-size:16px;color:#04130a;background:var(--green);border:0;border-radius:11px;padding:12px 20px;cursor:pointer">&#9654; Play your game</button>'
+        + '<a href="loop.html" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--green);border:1px solid var(--line2);border-radius:11px;padding:11px 16px;text-decoration:none">see the feed</a>'
+        + '</div><div class="ln" id="sharel" style="opacity:.7;margin-top:10px">publishing ...</div></div>';
+      var _pm=document.getElementById('playmine'); if(_pm) _pm.onclick=function(){ openGame(game); };
+      fetch(WORKER+'/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:game.id,title:game.title,prompt:prompt,mechanic:game.mechanic,html:game.html})})
+        .then(function(r){return r.json();}).then(function(d){ var s=document.getElementById('sharel'); if(!s)return; if(d&&d.play){ s.innerHTML='live in the feed &middot; share: <a class="g" style="text-decoration:underline" href="'+d.play+'" target="_blank" rel="noopener">'+d.play+'</a>'; } else { s.textContent='saved.'; } })
+        .catch(function(){ var s=document.getElementById('sharel'); if(s) s.textContent='(playable now; feed publish offline)'; });
       try{ out.scrollIntoView({behavior:'smooth',block:'end'}); }catch(e){}
     }
   })();
@@ -251,6 +267,9 @@ function restoreState(){ try{ var s=JSON.parse(localStorage.getItem('lm_create_v
   if(s.prompt && $('#prompt')){ $('#prompt').value=s.prompt; } }catch(e){} }
 var _pi=$('#prompt'); if(_pi) _pi.addEventListener('input', saveState);
 restoreState();
+
+function openGame(game){ var f=document.getElementById('gframe'); if(!f)return; f.srcdoc=game.html; document.getElementById('gt').textContent=game.title; document.getElementById('gplay').style.display='flex'; }
+var _gb=document.getElementById('gback'); if(_gb) _gb.onclick=function(){ document.getElementById('gplay').style.display='none'; document.getElementById('gframe').srcdoc=''; };
 </script>
 </body>
 </html>
