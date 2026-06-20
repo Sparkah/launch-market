@@ -1,0 +1,24 @@
+# secrets - NEVER deploy these
+.env
+.env.*
+.codeplain.env
+.enoki.env
+.vercel.env
+.sui_registry.key
+*.key
+
+# vcs / deps / local
+.git
+.gitignore
+.vercel
+node_modules
+__pycache__
+*.pyc
+
+# build / run artifacts (not part of the static demo)
+runs
+dist
+dist-codeplain
+plain_modules
+conformance_tests
+src

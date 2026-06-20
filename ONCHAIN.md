@@ -22,9 +22,10 @@ For each candidate, `runner/run_job.py`:
    Walrus testnet (real blobs, served back publicly via the aggregator).
 2. Sends each blob's Sui object to the Launch Market registry address, so the
    candidate's receipt is a real Sui object the registry owns.
-3. Records blob URLs + Sui object ids + explorer links in `candidate.json`, and
-   flips `integrations.walrus` and `integrations.sui` from `mocked` to `live`.
-   `deepbook` stays `mocked`, and the gate honestly flags it.
+3. Records blob URLs + Sui object ids + explorer links in `candidate.json`, flips
+   `integrations.walrus` and `integrations.sui` to `live`, and reads a live DeepBook
+   market signal (`deepbook_snapshot.py`), flipping `integrations.deepbook` to
+   `readonly`. No integration is mocked, so the gate flags nothing.
 
 ## Registry
 
@@ -47,7 +48,7 @@ curl https://fullnode.testnet.sui.io:443 -H 'Content-Type: application/json' \
 Verified example: object
 `0xb44675f1092eefa77e6c6a90964ba12cda3bb824a1d3613f68eed676541fad58`, type
 `...::blob::Blob`, owner `AddressOwner` = the registry address above. Its gated
-report flags only `deepbook_mocked` (walrus + sui are live).
+report flags no mocked integrations (Walrus + Sui live, DeepBook a live read-only signal).
 
 ## Files
 

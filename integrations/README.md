@@ -1,46 +1,32 @@
-# Integration Stubs
+# Integrations (live on testnet)
 
-The first build keeps Sui, Walrus, and DeepBook behind explicit adapters.
+Walrus, Sui, and DeepBook are wired for real, not stubbed.
 
-## Sui
+## Walrus (live)
 
-Target object: `GameCandidate`.
+Each candidate's manifest and Codeplain-gated validation report are stored as
+durable public blobs via the testnet publisher, served back through the aggregator.
+See `walrus_publish.py` and `ONCHAIN.md`.
 
-Fields:
+## Sui (live)
 
-- `id`
-- `creator`
-- `walrus_manifest_blob`
-- `validation_hash`
-- `promotion_status`
+Each blob's Sui object is sent to the Launch Market registry address
+(`send_object_to`), so the candidate's receipt is a real Sui object the registry
+owns, verifiable via `sui_getObject`. See `sui_keygen.mjs` and `sui_registry.json`.
 
-## Walrus
+## DeepBook (live, read-only)
 
-Artifacts to upload:
+A real read of a DeepBook v3 testnet pool (SUI_DBUSDC) via the public indexer, used
+as the transparent market-data anchor for the launch-credit market. It is a read,
+not order placement. See `deepbook_snapshot.py`. Example:
 
-- `.plain` specs
-- `candidate.json`
-- `reports/validation.json`
-- screenshots
-- optional zipped playable preview
-
-## DeepBook
-
-Use as the transparent market primitive for launch-credit allocation.
-
-First demo can use a deterministic snapshot while the adapter shape remains:
-
-```json
-{
-  "pair": "SUI/USDC",
-  "mid": "mocked",
-  "depth": "mocked",
-  "source": "deepbook-adapter"
-}
+```text
+GET https://deepbook-indexer.testnet.mystenlabs.com/orderbook/SUI_DBUSDC?level=1
+-> { "bids": [["0.705","10"]], "asks": [["0.714","10"]], ... }
 ```
 
-## BGA Transparency Rule
+## BGA transparency rule
 
-No recommendation may hide missing evidence. Every allocation record must show
-`why`, `risk`, and `missing_evidence`.
-
+No recommendation hides missing evidence. Every allocation record shows `why`,
+`risk`, and `missing_evidence`, and the gate-validated receipt is public on-chain
+before any capital is allocated.

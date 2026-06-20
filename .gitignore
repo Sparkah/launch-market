@@ -17,3 +17,5 @@ __pycache__/
 *.pyc
 .sui_registry.key
 .enoki.env
+.vercel.env
+.vercel

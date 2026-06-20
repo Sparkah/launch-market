@@ -1,72 +1,68 @@
-# Game Factory Launch Market
+# Launch Market
 
-Auditable AI game launchpad for the Encode Vibe Coding Hackathon.
+**The accessible front door to web3 gaming.** A feed of instant, AI-generated
+casual games anyone can play with a Google login (zkLogin, no wallet) and make
+from one sentence. Every game is validated by a Codeplain-generated gate and gets
+a verifiable Walrus + Sui + DeepBook receipt before the crowd greenlights it.
 
-Game Factory can generate many HTML5 games. Launch Market decides which
-candidates are safe, testable, and worth promotion capital before anything
-touches the production Factory.
+- Live demo: https://launch-market-wheat.vercel.app
+- Public repo: https://github.com/Sparkah/launch-market
 
-## Bounty Coverage
+Sui gaming has world-class rails and almost no players. We are the on-ramp:
+instant casual games as the front door, on-chain ownership as the reason to stay.
 
-- **Codeplain (LIVE):** a `.plain` spec renders the candidate validation gate,
+## 2-minute demo path
+
+1. `/` (landing) - the pitch, with a live row that links the real Walrus blob, the
+   Sui object, the Codeplain gate (7/7), and a live DeepBook read. All clickable.
+2. `/loop.html` - swipe a feed of REAL factory games, tap Play to actually play one,
+   then "sign in with Google" (zkLogin) and watch your Sui address and Moons appear.
+   No wallet.
+3. `/creation.html` - pick 2D/3D and a preset (Minecraft, Roblox, Brainrot,
+   Match-3, ...), describe a twist, and watch it route to Codeplain or the factory.
+
+## Bounty coverage
+
+- **Codeplain (live):** a `.plain` spec renders the candidate validation gate,
   verified 7/7 against an external acceptance harness. See `CODEPLAIN.md`.
-- **Walrus (LIVE, testnet):** every candidate's manifest + Codeplain-gated report
-  are anchored as durable, public blobs. See `ONCHAIN.md`.
-- **Sui (LIVE, testnet):** each receipt blob's Sui object is owned by the Launch
-  Market registry - a real on-chain candidate registry with Sui object references,
-  on Sui's verifiable-fairness + true-ownership gaming thesis. See `ONCHAIN.md`.
-- **Solvimon:** the Moons economy (30 plays = 1 build) plus Pro/Studio
-  subscriptions and a graduation profit-share. See the landing page.
-- **BGA (LIVE):** the Codeplain gate produces genuine validation evidence, so
-  evidence is public and on-chain before any capital is allocated.
-- **DeepBook (planned):** the transparent launch-credit market signal, still
-  mocked - the gate honestly flags it.
-- **Bilt.me (brief):** mobile companion for creator intake and backer allocation.
+- **Sui (live, testnet):** every candidate gets a Walrus blob, a registry-owned Sui
+  object, and a live read-only DeepBook market signal. See `ONCHAIN.md`.
+- **Solvimon:** the Moons economy (30 plays = 1 build), Pro/Studio subscriptions,
+  in-game add-ons (kids play, parents pay), and graduation profit-share. See
+  `launch_market_vision.png`.
+- **BGA:** evidence is public and on-chain (the Codeplain-gated receipt) before any
+  promotion capital is allocated.
+- **Vercel:** the whole demo is a static site deployed on Vercel (the live URL above).
 
-## Safety Boundary
+## How a candidate works
 
-This project never runs the scheduled Factory or production publish scripts.
+prompt -> factory builds it -> Codeplain gate validates -> Walrus blob + registry-owned
+Sui object + live DeepBook read anchored as the receipt -> crowd greenlights. Nothing
+touches the production factory; promotion is a manual step. See `runner/run_job.py`.
 
-Allowed writes:
+## Safety boundary
 
-```text
-hackathons/14-encode-vibe-coding-2026/launch-market/runs/<job-id>/
-```
+This project never runs the scheduled Factory or production publish scripts. It only
+writes under `runs/<job-id>/`; `Games/` and `Gallery/` are forbidden, and the
+Codeplain gate hard-fails any candidate that points at them.
 
-Forbidden writes:
+## Run and deploy
 
-```text
-Games/
-Gallery/
-Shared/skills/game-factory/scripts/run_factory.sh
-```
-
-Promotion into the real Factory is a manual future step.
-
-## Local Commands
+Static site, no build step. The front door is `index.html`.
 
 ```bash
-npm install
-npm run dev
-npm run build
-npm run runner
+python3 -m http.server 8123    # then open http://localhost:8123/
 ```
+
+Deploy: serve the repo root as static files (see `DEPLOY.md`). The legacy Vite React
+app under `src/` is not part of the demo; do NOT run `npm run build` for deployment.
 
 ## Codeplain
 
-Specs live in `specs/`. Config lives in `codeplain/config.yaml`.
-
-Dry-run example:
+`.plain` specs live in `specs/`, config in `codeplain/config.yaml`. Rebuild and
+verify the generated gate:
 
 ```bash
-cd specs
-codeplain game_candidate.plain --dry-run
+bash build_gate.sh                          # render specs/gate_spec.plain -> gate/, then verify
+python3 gate_conformance.py gate/gate_runner.py   # 7/7 against the spec's exact contract
 ```
-
-## Demo Path
-
-1. Enter a game prompt and allocation rule.
-2. Launch Market scores fairness, launch quality, and business potential.
-3. Evidence ledger shows specs, validation, Walrus/Sui/DeepBook status.
-4. Candidate remains sandboxed until manually promoted.
-5. Bilt mobile brief shows how creators/backers would use and pay for it.
