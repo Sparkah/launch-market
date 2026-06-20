@@ -1,0 +1,10 @@
+{
+  "checked": [
+    "candidate_manifest_presence",
+    "artifact_paths",
+    "integrations"
+  ],
+  "issues": [],
+  "ledger": [],
+  "ok": true
+}

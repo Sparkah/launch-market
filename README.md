@@ -31,7 +31,8 @@ instant casual games as the front door, on-chain ownership as the reason to stay
 - **Sui (live, testnet):** a Sui-backed validation + receipt layer. Every candidate
   gets a Walrus blob, a registry-owned Sui object, and a live read-only DeepBook
   market signal. This is provenance + market signal on Sui, not a full on-chain game
-  economy. See `ONCHAIN.md`.
+  economy. See `ONCHAIN.md`, and `examples/live-receipt/` for a tracked real
+  candidate + Codeplain-gated report with live, verifiable links.
 - **Solvimon:** the Moons economy (30 plays = 1 build), Pro/Studio subscriptions,
   in-game add-ons (kids play, parents pay), and graduation profit-share. See
   `launch_market_vision.png`.

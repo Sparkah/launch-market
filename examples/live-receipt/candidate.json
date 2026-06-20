@@ -1,0 +1,85 @@
+{
+  "artifacts": {
+    "candidate_manifest": "runs/gf-lm-fac2ef7537/candidate.json",
+    "design_doc": "runs/gf-lm-fac2ef7537/DESIGN.md",
+    "validation_report": "runs/gf-lm-fac2ef7537/reports/validation.json"
+  },
+  "created_at": "2026-06-20T17:21:08.773623+00:00",
+  "creator": "sui-demo",
+  "deepbook": {
+    "bestAsk": 0.711,
+    "bestBid": 0.703,
+    "mid": 0.707,
+    "network": "testnet",
+    "pool": "SUI_DBUSDC",
+    "source": "deepbook-v3-testnet-indexer",
+    "url": "https://deepbook-indexer.testnet.mystenlabs.com/orderbook/SUI_DBUSDC?level=1"
+  },
+  "evidence": [
+    {
+      "label": "Plain spec",
+      "status": "ready",
+      "value": "specs/game_candidate.plain"
+    },
+    {
+      "label": "Gate spec",
+      "status": "ready",
+      "value": "specs/gate_spec.plain"
+    },
+    {
+      "label": "Walrus artifact",
+      "status": "live",
+      "value": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow"
+    },
+    {
+      "label": "Sui object",
+      "status": "live",
+      "value": "https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0"
+    },
+    {
+      "label": "DeepBook signal",
+      "status": "readonly",
+      "value": "SUI_DBUSDC mid 0.707"
+    }
+  ],
+  "id": "gf-lm-fac2ef7537",
+  "integrations": {
+    "bilt": "brief_ready",
+    "codeplain": "ready",
+    "deepbook": "readonly",
+    "sui": "live",
+    "walrus": "live"
+  },
+  "promotion_status": "manual_only",
+  "prompt": "neon merge frenzy for the sui demo",
+  "receipts": {
+    "candidate": {
+      "blobId": "BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow",
+      "status": "newlyCreated",
+      "suiExplorer": "https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0",
+      "suiObject": "0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0",
+      "suiOwner": "0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df",
+      "url": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow"
+    },
+    "validation": {
+      "blobId": "pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4",
+      "status": "newlyCreated",
+      "suiExplorer": "https://suiscan.xyz/testnet/object/0x62205fbea37c00786d9b03ac12f2c6528b608f446904031a159cd4d063788013",
+      "suiObject": "0x62205fbea37c00786d9b03ac12f2c6528b608f446904031a159cd4d063788013",
+      "suiOwner": "0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df",
+      "url": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4"
+    }
+  },
+  "scores": {
+    "business": 49,
+    "fairness": 66,
+    "launch": 74
+  },
+  "slug": "merge-run-launch",
+  "sui": {
+    "explorer": "https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0",
+    "object": "0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0",
+    "registry": "0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df"
+  },
+  "title": "Merge Run Launch"
+}
