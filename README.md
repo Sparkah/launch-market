@@ -30,8 +30,6 @@ instant casual games as the front door, on-chain ownership as the reason to stay
 - **Solvimon:** the Moons economy (30 plays = 1 build), Pro/Studio subscriptions,
   in-game add-ons (kids play, parents pay), and graduation profit-share. See
   `launch_market_vision.png`.
-- **BGA:** evidence is public and on-chain (the Codeplain-gated receipt) before any
-  promotion capital is allocated.
 - **Vercel:** the whole demo is a static site deployed on Vercel (the live URL above).
 
 ## How a candidate works

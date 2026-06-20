@@ -171,7 +171,7 @@ document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
   document.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));
   c.classList.add('sel'); st.dim=c.dataset.dim; st.preset=null;
   $('#s2').classList.remove('off'); $('#s3').classList.add('off'); $('#go').disabled=true; $('#out').classList.remove('show'); $('#route').innerHTML='';
-  renderPresets();
+  renderPresets(); saveState();
 }));
 
 function renderPresets(){
@@ -189,7 +189,7 @@ function renderPresets(){
       document.querySelectorAll('.preset').forEach(x=>x.classList.remove('sel'));
       el.classList.add('sel'); st.preset=p;
       $('#s3').classList.remove('off'); $('#go').disabled=false; $('#out').classList.remove('show');
-      showRoute();
+      showRoute(); saveState();
     });
     g.appendChild(el);
   });
@@ -242,6 +242,15 @@ $('#go').addEventListener('click',()=>{
     }
   })();
 });
+
+// minimal session save: remember 2D/3D, preset, and prompt across navigation
+function saveState(){ try{ localStorage.setItem('lm_create_v1', JSON.stringify({dim:st.dim, preset:st.preset?st.preset.name:null, prompt:($('#prompt')||{}).value||''})); }catch(e){} }
+function restoreState(){ try{ var s=JSON.parse(localStorage.getItem('lm_create_v1')||'null'); if(!s||!s.dim) return;
+  var ch=[].slice.call(document.querySelectorAll('.choice')).filter(function(c){return c.dataset.dim===s.dim})[0]; if(ch) ch.click();
+  if(s.preset){ var pc=[].slice.call(document.querySelectorAll('.preset')).filter(function(el){var n=el.querySelector('.pn'); return n && n.textContent.indexOf(s.preset)===0})[0]; if(pc) pc.click(); }
+  if(s.prompt && $('#prompt')){ $('#prompt').value=s.prompt; } }catch(e){} }
+var _pi=$('#prompt'); if(_pi) _pi.addEventListener('input', saveState);
+restoreState();
 </script>
 </body>
 </html>

@@ -272,15 +272,18 @@ def main() -> int:
 
     # Anchor the candidate manifest on Walrus -> real receipt; flip walrus live.
     # The blob's Sui object is sent to the registry address, so sui goes live too.
+    # Reflect live anchoring in the manifest BEFORE publishing, so the public candidate
+    # blob is not self-contradictory (integrations already read "live" in the bytes).
+    candidate["integrations"]["walrus"] = "live"
+    candidate["integrations"]["sui"] = "live"
+    write_json(cand_path, candidate)
     manifest = publish_to_walrus(cand_path)
     if manifest.get("blobId"):
         candidate["receipts"] = {"candidate": manifest}
-        candidate["integrations"]["walrus"] = "live"
         for ev in candidate.get("evidence", []):
             if ev["label"] == "Walrus artifact":
                 ev["value"], ev["status"] = manifest.get("url"), "live"
         if manifest.get("suiObject"):
-            candidate["integrations"]["sui"] = "live"
             candidate["sui"] = {
                 "registry": manifest.get("suiOwner"),
                 "object": manifest.get("suiObject"),
@@ -289,6 +292,12 @@ def main() -> int:
             for ev in candidate.get("evidence", []):
                 if ev["label"] == "Sui object":
                     ev["value"], ev["status"] = manifest.get("suiExplorer"), "live"
+        else:
+            candidate["integrations"]["sui"] = "mocked"
+        write_json(cand_path, candidate)
+    else:
+        candidate["integrations"]["walrus"] = "mocked"
+        candidate["integrations"]["sui"] = "mocked"
         write_json(cand_path, candidate)
 
     # Validate the (now walrus-live) candidate with the Codeplain gate.
