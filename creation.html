@@ -230,7 +230,17 @@ $('#go').addEventListener('click',()=>{
     `<span class="ln">&rarr; <span class="g">${cap(prompt)}</span> queued for greenlight. the crowd votes next.</span>`,
   ];
   out.innerHTML=''; let i=0;
-  (function tick(){ if(i<lines.length){ out.innerHTML+=lines[i]+'<br>'; i++; setTimeout(tick, 520);} })();
+  setTimeout(function(){ try{ out.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} }, 80);
+  (function tick(){
+    if(i<lines.length){ out.innerHTML+=lines[i]+'<br>'; i++; setTimeout(tick, 520); }
+    else {
+      out.innerHTML += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'
+        + '<div class="ln" style="color:var(--ink)">In the greenlight queue. The crowd votes next and the top picks get built, demand builds the game, not an instant render.</div>'
+        + '<a href="loop.html" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-weight:800;color:#04130a;background:var(--green);border-radius:10px;padding:11px 18px;text-decoration:none">&#9654; Play the live feed</a>'
+        + '</div>';
+      try{ out.scrollIntoView({behavior:'smooth',block:'end'}); }catch(e){}
+    }
+  })();
 });
 </script>
 </body>
