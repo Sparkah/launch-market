@@ -25,6 +25,10 @@ try:
     import walrus_publish
 except Exception:  # pragma: no cover - publishing is optional
     walrus_publish = None
+try:
+    import deepbook_snapshot
+except Exception:  # pragma: no cover - market read is optional
+    deepbook_snapshot = None
 
 
 def slugify(text: str) -> str:
@@ -246,6 +250,17 @@ def main() -> int:
     args = parser.parse_args()
 
     candidate = make_candidate(args.prompt, args.creator)
+    if deepbook_snapshot is not None:  # live read-only DeepBook market signal
+        try:
+            db = deepbook_snapshot.snapshot()
+            if db.get("mid"):
+                candidate["deepbook"] = db
+                candidate["integrations"]["deepbook"] = "readonly"
+                for ev in candidate.get("evidence", []):
+                    if ev["label"] == "DeepBook signal":
+                        ev["value"], ev["status"] = f"{db['pool']} mid {db['mid']}", "readonly"
+        except Exception:
+            pass
     run_dir = RUNS_DIR / candidate["id"]
     assert_sandbox_path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
