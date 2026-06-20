@@ -29,7 +29,7 @@
     {
       "label": "Walrus artifact",
       "status": "live",
-      "value": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow"
+      "value": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/sj22pKMfLz4nAzThcuLFucksRpmYhFDegDvcw3W08mE"
     },
     {
       "label": "Sui object",
@@ -54,12 +54,12 @@
   "prompt": "neon merge frenzy for the sui demo",
   "receipts": {
     "candidate": {
-      "blobId": "BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow",
+      "blobId": "sj22pKMfLz4nAzThcuLFucksRpmYhFDegDvcw3W08mE",
       "status": "newlyCreated",
       "suiExplorer": "https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0",
       "suiObject": "0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0",
       "suiOwner": "0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df",
-      "url": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/BqOhuf34ZaYVF4YN136myoCsOfPN6v30ho77Y1lFVow"
+      "url": "https://aggregator.walrus-testnet.walrus.space/v1/blobs/sj22pKMfLz4nAzThcuLFucksRpmYhFDegDvcw3W08mE"
     },
     "validation": {
       "blobId": "pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4",
