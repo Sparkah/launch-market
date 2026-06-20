@@ -7,15 +7,18 @@ the actual artifacts; the links below are live right now.
 ## Files
 
 - `candidate.json` - the candidate manifest. `integrations`: walrus `live`, sui
-  `live`, deepbook `readonly`. Includes the Walrus blob ids, the Sui object ids
-  (owned by the registry), and the DeepBook snapshot.
+  `live`, deepbook `readonly`. Its on-chain receipt is the validation report (Walrus
+  blob + Sui object, below), plus the candidate's own Sui object and the DeepBook
+  snapshot. This file's own Walrus blob is the byte-equivalent link under "Verify"
+  below; a manifest can't contain its own content-addressed URL, so it is not stored
+  inside the file.
 - `validation.json` - the **Codeplain-generated gate** output for this candidate
   (`ok: true`, no issues). Same gate verified at `npm run plain:verify` (7/7).
 
 ## Verify it yourself (all live on testnet)
 
 - Candidate manifest blob (Walrus), byte-equivalent to `candidate.json` in this folder:
-  `https://aggregator.walrus-testnet.walrus.space/v1/blobs/TLtQ2KigMaEZxbRNj-yh7hFqFE6iB_7Mj9c2fmV6HbA`
+  `https://aggregator.walrus-testnet.walrus.space/v1/blobs/zb87Jte3mUWalSkIPGw3Z9YzV2D6WIZop2O-RvF2mlc`
 - Codeplain-gated validation report blob (Walrus):
   `https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4`
 - Sui object (owned by the registry), on Suiscan:
