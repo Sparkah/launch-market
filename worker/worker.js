@@ -44,7 +44,7 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
 
     if (path === '/api/submit' && req.method === 'POST') {
-      if (origin && !ALLOWED.has(origin)) return json({ error: 'origin not allowed' }, 403, origin);
+      if (!ALLOWED.has(origin)) return json({ error: 'origin not allowed' }, 403, origin);
       if (await rateLimited(env, ip, 'submit', 8)) return json({ error: 'rate limited, try again shortly' }, 429, origin);
       let b;
       try { b = await req.json(); } catch (e) { return json({ error: 'bad json' }, 400, origin); }
@@ -62,7 +62,7 @@ export default {
       await env.GAMES.put('game:' + id, JSON.stringify({ ...rec, html: b.html }));
       let idx = [];
       try { idx = JSON.parse((await env.GAMES.get('index')) || '[]'); } catch (e) {}
-      idx = idx.filter((g) => g.id !== id);
+      idx = idx.filter((g) => g.id !== id && g.title !== rec.title);
       idx.unshift(rec);
       if (idx.length > 200) idx.length = 200;
       await env.GAMES.put('index', JSON.stringify(idx));

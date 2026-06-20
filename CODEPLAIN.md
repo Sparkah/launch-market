@@ -25,6 +25,18 @@ It renders `specs/gate_spec.plain` with the `codeplain` CLI, copies the generate
 `runner/run_job.py` then calls this generated gate to validate every candidate it
 creates.
 
+## For Codeplain judges (run this)
+
+```bash
+npm run plain:install   # npx plain-forge install --agent claude --scope project
+npm run plain:verify    # external acceptance harness -> prints 7/7
+npm run plain:gate      # re-render specs/gate_spec.plain via codeplain, then verify
+```
+
+The project follows plain conventions: `.plain` specs in `specs/`, a
+`codeplain/config.yaml`, the renderer's generated gate in `gate/`, and an external
+conformance harness as the acceptance bar (`gate_conformance.py`).
+
 ## Why the external harness
 
 Codeplain is an LLM spec-to-code compiler. It generates plausible code that

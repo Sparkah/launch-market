@@ -206,13 +206,8 @@ function renderPresets(){
 
 function showRoute(){
   const p=st.preset; if(!p){$('#route').innerHTML='';return;}
-  const e=engineFor(p);
-  let msg = e.id==='codeplain'
-    ? `engine: <b>Codeplain</b> &rarr; renders <b>${p.name.toLowerCase()}.plain</b> into the game logic, factory renders it.`
-    : e.fallback
-      ? `engine: <span class="f">Factory (default)</span>  -  out of codeplain credits, so the factory builds it directly.`
-      : `engine: <span class="f">Factory 3D</span>  -  3D needs the engine, codeplain stays on logic, not canvases.`;
-  if(p.builder) msg += ` includes a <b>level builder</b>.`;
+  let msg = `you'll get an <b>instant playable prototype</b> of <b>${p.name}</b> right now. graduating games are rendered from a <b>Codeplain .plain</b> spec plus the factory, then gated and given an on-chain receipt.`;
+  if(p.builder) msg += ` (the full version adds a <b>level builder</b>.)`;
   $('#route').innerHTML = msg;
 }
 

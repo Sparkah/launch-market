@@ -23,13 +23,6 @@ export const bountyTracks: BountyTrack[] = [
     status: 'mocked'
   },
   {
-    key: 'bga',
-    name: 'BGA',
-    requirement: 'Fairer and more transparent strategy tooling.',
-    proof: 'Public evidence ledger before any game receives promotion capital.',
-    status: 'ready'
-  },
-  {
     key: 'bilt',
     name: 'Bilt.me',
     requirement: 'Working mobile app with acquisition, usage, and payment story.',
