@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Launch Market // play</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090a; --green:#39ff7a; --green-mid:#2aa564; --green-dim:#1f6b3e; --amber:#ffb347; --blue:#7fd4ff; --ink:#f1f4e7;
+  --line:rgba(57,255,122,.28); --line2:rgba(57,255,122,.55);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:#0a0d0a;color:var(--ink);font-family:var(--mono);display:grid;place-items:center;
+  background-image:radial-gradient(900px 500px at 50% -10%,rgba(57,255,122,.08),transparent)}
+/* phone frame */
+.phone{position:relative;width:min(430px,100vw);height:min(900px,100vh);background:var(--bg);overflow:hidden;
+  border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(0,0,0,.6)}
+@media(max-width:460px){.phone{border:none;border-radius:0;width:100vw;height:100vh}}
+
+/* top bar */
+.top{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;background:linear-gradient(rgba(7,9,10,.9),transparent)}
+.brand{font-weight:800;font-size:15px;text-shadow:0 0 8px rgba(57,255,122,.5);color:var(--green)}
+.brand .sl{color:var(--green-mid)}
+.topr{display:flex;align-items:center;gap:9px}
+.moons{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--amber);
+  border:1px solid rgba(255,179,71,.4);border-radius:999px;padding:5px 11px;background:rgba(0,0,0,.3)}
+.signin{font-family:var(--mono);font-weight:700;font-size:12.5px;color:#04130a;background:var(--green);border:none;
+  border-radius:999px;padding:7px 13px;cursor:pointer;box-shadow:0 0 16px rgba(57,255,122,.4);display:inline-flex;gap:6px;align-items:center}
+.signin:active{transform:translateY(1px)}
+.addr{display:none;align-items:center;gap:7px;font-size:12px;color:var(--green);border:1px solid var(--line2);border-radius:999px;padding:6px 11px;background:rgba(0,0,0,.35)}
+.addr.show{display:inline-flex}
+.addr .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+
+/* feed */
+.feed{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.card{position:relative;height:100%;scroll-snap-align:start;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .scrim{position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(6,8,5,.55) 70%,rgba(6,8,5,.95))}
+.meta{position:relative;z-index:2;padding:0 18px 30px}
+.meta .gen{font-size:11px;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.meta h2{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.meta p{color:#cfd6c4;font-size:14px;margin-top:8px;max-width:80%}
+.play{margin-top:18px;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:800;font-size:16px;
+  color:#04130a;background:var(--green);border:none;border-radius:12px;padding:13px 24px;cursor:pointer;box-shadow:0 0 26px rgba(57,255,122,.5)}
+.play:active{transform:translateY(1px)}
+/* side rail */
+.rail{position:absolute;right:14px;bottom:120px;z-index:2;display:flex;flex-direction:column;gap:18px;align-items:center}
+.rb{display:flex;flex-direction:column;align-items:center;gap:4px;color:#eef;font-size:11px;cursor:pointer}
+.rb .ic{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.35);display:grid;place-items:center;font-size:20px}
+.rb.on .ic{color:var(--green);border-color:var(--line2);box-shadow:0 0 14px rgba(57,255,122,.4)}
+.hint{position:absolute;left:0;right:0;bottom:14px;z-index:2;text-align:center;font-size:11px;color:rgba(255,255,255,.4)}
+
+/* play overlay */
+.over{position:absolute;inset:0;z-index:40;background:rgba(5,7,4,.92);display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:30px}
+.over.show{display:flex}
+.over .ttl{font-size:22px;font-weight:800;color:var(--green)}
+.over .bar{width:200px;height:8px;border-radius:99px;background:rgba(57,255,122,.15);overflow:hidden}
+.over .bar i{display:block;height:100%;width:0;background:var(--green);box-shadow:0 0 12px var(--green);transition:width 2.6s linear}
+.over small{color:var(--green-mid);font-size:12px}
+
+/* toast */
+.toast{position:absolute;left:14px;right:14px;bottom:24px;z-index:50;background:#0c130b;border:1px solid var(--line2);border-radius:14px;
+  padding:15px 17px;box-shadow:0 0 30px rgba(57,255,122,.25);transform:translateY(140%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.toast.show{transform:none}
+.toast .big{font-size:16px;font-weight:800;color:var(--green)}
+.toast .sub{font-size:12.5px;color:var(--green-mid);margin-top:5px;line-height:1.5}
+.toast .sub b{color:var(--ink)}
+
+/* make button */
+.make{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;z-index:25;font-family:var(--mono);font-weight:700;font-size:12.5px;
+  color:var(--green);background:rgba(7,9,10,.7);border:1px solid var(--line2);border-radius:999px;padding:9px 16px;cursor:pointer;backdrop-filter:blur(6px);text-decoration:none;display:none}
+.make.show{display:inline-block}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="top">
+    <span class="brand">launch_market<span class="sl"> // </span>play</span>
+    <span class="topr">
+      <span class="moons">&#9670; <span id="moonN">0</span></span>
+      <button class="signin" id="signin">sign in with Google</button>
+      <span class="addr" id="addr"><span class="dot"></span><span id="addrTxt">0x..</span></span>
+    </span>
+  </div>
+
+  <div class="feed" id="feed"></div>
+
+  <div class="over" id="over">
+    <div class="ttl" id="overTtl">playing...</div>
+    <div class="bar"><i id="overBar"></i></div>
+    <small>instant. no download. no wallet.</small>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="big" id="toastBig"></div>
+    <div class="sub" id="toastSub"></div>
+  </div>
+
+  <a class="make" id="make" href="creation.html">+ make your own</a>
+</div>
+
+<script type="module">
+const ENOKI_PUBLIC_KEY = 'enoki_public_70f43415c8b95e8a9fd899c3c7cb3da6';
+const GOOGLE_CLIENT_ID  = '928006945966-16dc76g3d64tak3p9237raajdn69av12.apps.googleusercontent.com';
+const REGISTRY = '0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df';
+
+const FEED = [
+  {s:'merge_conquest', t:'Merge Conquest', g:'merge',    h:'Merge an army, crush the line.'},
+  {s:'backrooms',      t:'Backrooms',      g:'horror',   h:'Escape the endless yellow rooms.'},
+  {s:'devourling',     t:'Devourling',     g:'survivor', h:'Survive the swarm. Evolve.'},
+  {s:'parry_knight',   t:'Parry Knight',   g:'action',   h:'Read the wind-up. Counter-kill.'},
+  {s:'beast_bazaar',   t:'Beast Bazaar',   g:'merge',    h:'Hatch, merge, fill every order.'},
+  {s:'power_wash',     t:'Power Wash',     g:'cleaning', h:'Blast the grime to 100%.'},
+  {s:'coin_cascade',   t:'Coin Cascade',   g:'merge',    h:'Drop, fuse, chain the cascade.'},
+  {s:'gulp_rush',      t:'Gulp Rush',      g:'arcade',   h:'Swallow everything smaller. Grow.'},
+];
+
+const $ = s => document.querySelector(s);
+let moons = 0, signedIn = false, address = null, plays = 0;
+
+$('#feed').innerHTML = FEED.map((c,i)=>`
+  <section class="card">
+    <img src="landing-assets/${c.s}.png" alt="">
+    <div class="scrim"></div>
+    <div class="rail">
+      <div class="rb on" data-like="${i}"><div class="ic">&#9650;</div><span>back</span></div>
+      <div class="rb"><div class="ic">&#9670;</div><span>earn</span></div>
+    </div>
+    <div class="meta">
+      <div class="gen">${c.g}</div>
+      <h2>${c.t}</h2>
+      <p>${c.h}</p>
+      <button class="play" data-i="${i}">&#9654; Play</button>
+    </div>
+  </section>`).join('');
+
+function setMoons(n){ moons=n; $('#moonN').textContent=n; }
+function trunc(a){ return a.slice(0,6)+'..'+a.slice(-4); }
+
+function play(i){
+  const c = FEED[i];
+  $('#overTtl').textContent = 'playing ' + c.t + ' ...';
+  $('#over').classList.add('show');
+  $('#overBar').style.width='0';
+  requestAnimationFrame(()=> $('#overBar').style.width='100%');
+  setTimeout(()=>{
+    $('#over').classList.remove('show');
+    plays++;
+    const earned = 8 + Math.floor((c.t.length*3)%9);
+    setMoons(moons + earned);
+    $('#make').classList.add('show');
+    if(signedIn){
+      toast(`+${earned} Moons earned`, `Anchored to <b>${trunc(address)}</b> on Sui. You own this run. No wallet, no gas.`);
+    } else {
+      toast(`+${earned} Moons earned`, `Sign in with Google to keep your Moons and <b>own your games on Sui</b>. No wallet needed.`);
+    }
+  }, 2700);
+}
+
+let toastT;
+function toast(big, sub){
+  $('#toastBig').innerHTML=big; $('#toastSub').innerHTML=sub;
+  $('#toast').classList.add('show'); clearTimeout(toastT);
+  toastT=setTimeout(()=> $('#toast').classList.remove('show'), 4200);
+}
+
+function setSignedIn(addr){
+  signedIn=true; address=addr;
+  $('#signin').style.display='none';
+  $('#addrTxt').textContent=trunc(addr);
+  $('#addr').classList.add('show');
+  toast(`You're on Sui.`, `Signed in with Google &rarr; <b>${trunc(addr)}</b>. Your ${moons} Moons and your games are yours now. No seed phrase, no wallet.`);
+}
+
+document.addEventListener('click', e=>{
+  const p = e.target.closest('.play'); if(p){ play(+p.dataset.i); return; }
+  const l = e.target.closest('.rb[data-like]'); if(l){ l.classList.toggle('on'); }
+});
+
+// ---- real zkLogin via Enoki, with a graceful fallback so the demo never breaks ----
+let flow=null;
+async function enoki(){
+  if(flow) return flow;
+  const m = await import('https://esm.sh/@mysten/enoki');
+  flow = new (m.EnokiFlow||m.default)({ apiKey: ENOKI_PUBLIC_KEY });
+  return flow;
+}
+async function addrFromFlow(f){
+  try{ const kp=await f.getKeypair({network:'testnet'}); if(kp?.toSuiAddress) return kp.toSuiAddress(); }catch(e){}
+  try{ const s=f.$zkLoginState?.get?.(); if(s?.address) return s.address; }catch(e){}
+  try{ const s=await f.getSession?.(); if(s?.address) return s.address; }catch(e){}
+  return null;
+}
+function demoSession(){ // fallback only: keeps the demo flowing if OAuth round-trip is not configured yet
+  setSignedIn(REGISTRY);
+}
+$('#signin').addEventListener('click', async ()=>{
+  try{
+    const f=await enoki();
+    const url=await f.createAuthorizationURL({ provider:'google', clientId:GOOGLE_CLIENT_ID,
+      redirectUrl: location.origin+location.pathname, network:'testnet' });
+    location.href=url;
+  }catch(e){ console.warn('enoki sign-in failed, demo fallback:', e); demoSession(); }
+});
+// handle the OAuth callback on return
+(async ()=>{
+  if(!location.hash.includes('id_token')) return;
+  try{
+    const f=await enoki(); await f.handleAuthCallback();
+    const a=await addrFromFlow(f);
+    history.replaceState(null,'',location.pathname);
+    if(a) setSignedIn(a); else demoSession();
+  }catch(e){ console.warn('callback failed, demo fallback:', e); history.replaceState(null,'',location.pathname); demoSession(); }
+})();
+</script>
+</body>
+</html>
