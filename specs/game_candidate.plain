@@ -1,0 +1,47 @@
+---
+description: "Game Factory Launch Market candidate contract"
+import:
+  - python-console-app-template
+---
+
+***definitions***
+
+- :GameCandidate: is a proposed HTML5 game that may receive launch promotion.
+- :CreatorPrompt: is the text entered by the creator.
+- :PlainSpec: is the human-readable specification generated for :GameCandidate:.
+- :FactorySandbox: is a folder under `runs/<job-id>/` that may contain a copied game template and reports.
+- :Promotion: is the deliberate manual step that copies a successful candidate into the production Factory.
+- :ProductionFactory: is the existing `Games/`, `Gallery/`, and platform publishing pipeline.
+
+***implementation reqs***
+
+- :Implementation: should never write to :ProductionFactory:.
+- :Implementation: should write all generated artifacts under :FactorySandbox:.
+- :Implementation: should produce a JSON manifest named `candidate.json`.
+- :Implementation: should produce a Markdown design document named `DESIGN.md`.
+- :Implementation: should record whether Sui, Walrus, DeepBook, and Bilt integrations are live, mocked, or blocked.
+
+***test reqs***
+
+- :ConformanceTests: should verify that no generated path starts with `Games/` or `Gallery/`.
+- :ConformanceTests: should verify that `candidate.json` includes `id`, `title`, `prompt`, `scores`, `evidence`, and `promotion_status`.
+- :ConformanceTests: should verify that promotion defaults to `manual_only`.
+
+***functional specs***
+
+- :GameCandidate: should preserve the creator's original prompt.
+
+  ***acceptance tests***
+  - When :CreatorPrompt: is "build a merge defense game", `candidate.json` should contain that exact text in `prompt`.
+
+- :GameCandidate: should expose a business score, fairness score, and launch score.
+
+  ***acceptance tests***
+  - When a candidate is created, `candidate.json` should contain numeric `scores.business`, `scores.fairness`, and `scores.launch` values between 0 and 100.
+
+- :Promotion: should be manual-only by default.
+
+  ***acceptance tests***
+  - When a candidate is created, `candidate.json` should contain `promotion_status` equal to `manual_only`.
+  - When a candidate is created, no file should be written into `Games/` or `Gallery/`.
+

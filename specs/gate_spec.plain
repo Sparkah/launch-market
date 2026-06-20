@@ -1,0 +1,44 @@
+---
+description: "Launch Market validation gate contract"
+import:
+  - python-console-app-template
+---
+
+***definitions***
+
+- :GateRunner: is a command line validator for a :FactorySandbox:.
+- :FactorySandbox: is a folder under `runs/<job-id>/` containing candidate artifacts.
+- :ValidationReport: is the JSON report emitted by :GateRunner:.
+- :HardFail: is a validation issue that blocks launch allocation.
+- :Warning: is a validation issue that does not block allocation but must be visible.
+- :EvidenceLedger: is the public list of proofs shown to creators, backers, and judges.
+
+***implementation reqs***
+
+- :Implementation: should use only deterministic checks for the hackathon build.
+- :Implementation: should emit compact JSON to stdout.
+- :ValidationReport: should include `ok`, `issues`, `checked`, and `ledger` fields.
+- :HardFail: severity should be exactly `ERROR`.
+- :Warning: severity should be exactly `WARN`.
+- :Implementation: should not call production publish scripts.
+
+***functional specs***
+
+- :GateRunner: should fail when `candidate.json` is missing.
+
+  ***acceptance tests***
+  - When `candidate.json` is absent, :ValidationReport: should contain an issue with code `missing_candidate_manifest`.
+  - When `candidate.json` is absent, `ok` should be false.
+
+- :GateRunner: should fail when generated paths point at production Factory folders.
+
+  ***acceptance tests***
+  - When any artifact path starts with `Games/`, :ValidationReport: should contain an issue with code `production_path`.
+  - When any artifact path starts with `Gallery/`, :ValidationReport: should contain an issue with code `production_path`.
+
+- :GateRunner: should warn when on-chain or storage integrations are mocked.
+
+  ***acceptance tests***
+  - When Walrus status is `mocked`, :ValidationReport: should include issue code `walrus_mocked` with severity `WARN`.
+  - When Sui status is `mocked`, :ValidationReport: should include issue code `sui_mocked` with severity `WARN`.
+  - Warnings alone should not make `ok` false.

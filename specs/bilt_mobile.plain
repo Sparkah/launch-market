@@ -1,0 +1,37 @@
+---
+description: "Bilt mobile companion contract"
+---
+
+***definitions***
+
+- :MobileCompanion: is the Bilt.me app that lets creators and backers use Launch Market on a phone.
+- :Creator: is a person submitting a game request.
+- :Backer: is a person browsing candidates and allocating testnet launch credits.
+- :PaidUser: is a creator paying for more builds, private specs, or publish preparation.
+
+***implementation reqs***
+
+- :MobileCompanion: should have three tabs: Create, Market, Portfolio.
+- :MobileCompanion: should be usable without a wallet for browsing.
+- :MobileCompanion: should explain the payment story in-app.
+- :MobileCompanion: should not require production Factory write access.
+
+***functional specs***
+
+- :Creator: should submit a game prompt from mobile.
+
+  ***acceptance tests***
+  - The Create tab should have one prompt input and one submit action.
+  - The Create tab should show what happens next after submission.
+
+- :Backer: should inspect evidence before allocating credits.
+
+  ***acceptance tests***
+  - The Market tab should show candidate score, evidence status, and missing evidence.
+  - The allocation action should not appear before the evidence status.
+
+- :PaidUser: should understand why they would pay.
+
+  ***acceptance tests***
+  - The app should include paid tiers for more builds, private candidates, and publishing support.
+

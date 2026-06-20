@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.*
+runs/
+output/
+coverage/
+plain_modules/
+dist-codeplain/
+conformance_tests/
+codeplain.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts

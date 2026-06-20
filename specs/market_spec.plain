@@ -1,0 +1,38 @@
+---
+description: "Transparent launch market contract"
+---
+
+***definitions***
+
+- :LaunchMarket: is the allocation layer that decides which game candidates receive promotion credits.
+- :PromotionCredit: is a testnet or simulated unit used to fund candidate promotion.
+- :FairnessScore: measures whether evidence is visible before capital allocation.
+- :LaunchScore: measures whether a candidate is likely to earn attention.
+- :BusinessScore: measures whether the candidate supports a viable creator business.
+- :DeepBookSignal: is the market-data or liquidity reference used for launch allocation.
+- :WalrusArtifact: is a durable blob reference for specs, screenshots, reports, and manifests.
+- :SuiGameCandidate: is a Sui object or transaction record that points to the candidate artifact set.
+
+***implementation reqs***
+
+- :LaunchMarket: should default to testnet or simulated assets only.
+- :LaunchMarket: should never represent promotion credits as real securities.
+- :LaunchMarket: should explain every allocation recommendation in plain language.
+- :LaunchMarket: should show missing evidence before showing a final allocation.
+- :WalrusArtifact: references should be stored in `candidate.json` when available.
+- :SuiGameCandidate: references should be stored in `candidate.json` when available.
+
+***functional specs***
+
+- :LaunchMarket: should rank candidates by evidence first, then launch score.
+
+  ***acceptance tests***
+  - A candidate with no validation report should not receive an allocation recommendation.
+  - A candidate with higher launch score but missing evidence should rank below a candidate with complete evidence and moderate launch score.
+
+- :LaunchMarket: should expose a transparent portfolio rationale.
+
+  ***acceptance tests***
+  - Every allocation recommendation should include `why`, `risk`, and `missing_evidence`.
+  - Every recommendation should be readable by a non-trader.
+

@@ -1,0 +1,6 @@
+base_folder: plain_modules
+build_folder: dist-codeplain
+conformance_tests_folder: conformance_tests
+test_script_timeout: 300
+log_to_file: true
+
