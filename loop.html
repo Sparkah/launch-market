@@ -102,7 +102,7 @@ body{background:#0a0d0a;color:var(--ink);font-family:var(--mono);display:grid;pl
     <div class="sub" id="toastSub"></div>
   </div>
 
-  <a class="make" id="make" href="creation.html">+ make your own</a>
+  <a class="make show" id="make" href="creation.html">+ make your own</a>
 </div>
 
 <script type="module">
@@ -114,7 +114,7 @@ const REGISTRY = '0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb90
 const THUMBS = 'https://game-factory.tech/thumbs';
 const FEED = [
   {s:'merge_guns',    t:'Merge Guns',    g:'merge shooter', h:'Merge guns, melt the swarm.'},
-  {s:'merge_legion',  t:'Battle Merge',  g:'merge battle',  h:'Merge your army, hold the line.'},
+  {s:'merge_legion',  t:'Battle Merge',  g:'merge battle',  h:'Merge your army, hold the line.', img:'games/merge_legion/thumb.png'},
   {s:'bandlings',     t:'Bandlings',     g:'merge',          h:'Merge monsters, grow the song.'},
   {s:'brainrot_2048', t:'2048 Brainrot', g:'puzzle',        h:'Slide and merge all the way to 2048.'},
 ];
@@ -124,7 +124,7 @@ let moons = 0, signedIn = false, address = null, plays = 0, current = null;
 
 $('#feed').innerHTML = FEED.map((c,i)=>`
   <section class="card">
-    <img src="${THUMBS}/${c.s}.png" alt="">
+    <img src="${c.img||THUMBS+'/'+c.s+'.png'}" alt="">
     <div class="scrim"></div>
     <div class="rail">
       <div class="rb on" data-like="${i}"><div class="ic">&#9650;</div><span>back</span></div>
