@@ -146,8 +146,10 @@ footer .p{color:var(--green-mid)}
   <a class="lv" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/rCF2V7lDZGWSr_AgmKW1vo3MJSViI58iajE95_qOTwQ" target="_blank" rel="noopener"><b>Walrus receipts</b><i>live</i></a>
   <a class="lv" href="https://suiscan.xyz/testnet/account/0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df" target="_blank" rel="noopener"><b>Sui ownership</b><i>live</i></a>
   <span class="lv"><b>Codeplain gate</b><i>7/7</i></span>
-  <a class="lv" href="https://deepbook-indexer.testnet.mystenlabs.com/orderbook/SUI_DBUSDC?level=1" target="_blank" rel="noopener"><b>DeepBook signal</b><i>read</i></a>
+  <a class="lv" href="https://deepbook-indexer.testnet.mystenlabs.com/orderbook/SUI_DBUSDC?level=1" target="_blank" rel="noopener"><b>DeepBook SUI_DBUSDC</b><i id="dbmid">live read</i></a>
 </section>
+
+<script>fetch('https://deepbook-indexer.testnet.mystenlabs.com/orderbook/SUI_DBUSDC?level=1').then(function(r){return r.json()}).then(function(d){var a=+((d.asks||[])[0]||[])[0],b=+((d.bids||[])[0]||[])[0],el=document.getElementById('dbmid');if(a&&b&&el)el.textContent='mid '+((a+b)/2).toFixed(3)}).catch(function(){})</script>
 
 <section class="wrap block">
   <div class="pipe">
@@ -159,14 +161,14 @@ footer .p{color:var(--green-mid)}
 
 <section class="wrap block" id="browse">
   <div class="grid">
-    <figure><div class="ph"><img src="landing-assets/merge_conquest.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/backrooms.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/devourling.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/parry_knight.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/power_wash.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/coin_cascade.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/beast_bazaar.png" alt="" loading="lazy"></div></figure>
-    <figure><div class="ph"><img src="landing-assets/gulp_rush.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/merge_conquest.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/backrooms.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/devourling.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/parry_knight.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/power_wash.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/coin_cascade.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/beast_bazaar.png" alt=""></div></figure>
+    <figure><div class="ph"><img src="landing-assets/gulp_rush.png" alt=""></div></figure>
   </div>
 </section>
 

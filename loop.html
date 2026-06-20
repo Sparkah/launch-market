@@ -31,6 +31,8 @@ body{background:#0a0d0a;color:var(--ink);font-family:var(--mono);display:grid;pl
 .signin{font-family:var(--mono);font-weight:700;font-size:12.5px;color:#04130a;background:var(--green);border:none;
   border-radius:999px;padding:7px 13px;cursor:pointer;box-shadow:0 0 16px rgba(57,255,122,.4)}
 .signin:active{transform:translateY(1px)}
+.guest{font-family:var(--mono);font-size:11px;color:var(--green-mid);background:transparent;border:none;cursor:pointer;text-decoration:underline;padding:4px 2px}
+.guest:active{transform:translateY(1px)}
 .addr{display:none;align-items:center;gap:7px;font-size:12px;color:var(--green);border:1px solid var(--line2);border-radius:999px;padding:6px 11px;background:rgba(0,0,0,.35)}
 .addr.show{display:inline-flex}
 .addr.demo{color:var(--amber);border-color:rgba(255,179,71,.45)}
@@ -83,6 +85,7 @@ body{background:#0a0d0a;color:var(--ink);font-family:var(--mono);display:grid;pl
     <span class="topr">
       <span class="moons">&#9670; <span id="moonN">0</span></span>
       <button class="signin" id="signin">sign in with Google</button>
+      <button class="guest" id="guest">guest</button>
       <span class="addr" id="addr"><span class="dot"></span><span id="addrTxt">0x..</span></span>
     </span>
   </div>
@@ -163,9 +166,9 @@ function exitGame(){
   setMoons(moons + earned);
   $('#make').classList.add('show');
   if(signedIn){
-    toast(`+${earned} Moons earned`, `Anchored to <b>${trunc(address)}</b> on Sui. You own this run. No wallet, no gas.`);
+    toast(`+${earned} Moons earned`, `Linked to your Sui address <b>${trunc(address)}</b>. No wallet, no gas.`);
   } else {
-    toast(`+${earned} Moons earned`, `Sign in with Google to keep your Moons and <b>own your games on Sui</b>. No wallet needed.`);
+    toast(`+${earned} Moons earned`, `Sign in with Google to keep your Moons, <b>linked to your Sui address</b>. No wallet needed.`);
   }
   current = null;
 }
@@ -178,13 +181,13 @@ $('#gback').addEventListener('click', exitGame);
 
 function setSignedIn(addr, demo){
   signedIn=true; address=addr;
-  $('#signin').style.display='none';
+  $('#signin').style.display='none'; var gb=$('#guest'); if(gb) gb.style.display='none';
   $('#addrTxt').textContent = trunc(addr) + (demo?' (demo)':'');
   $('#addr').classList.add('show'); if(demo) $('#addr').classList.add('demo');
   if(demo){
     toast(`Demo session`, `Real Google sign-in did not complete, showing a demo address. The live zkLogin path is wired and works when the OAuth round-trips.`);
   } else {
-    toast(`You're on Sui.`, `Signed in with Google &rarr; <b>${trunc(addr)}</b>. Your ${moons} Moons and your games are yours now. No seed phrase, no wallet.`);
+    toast(`You're on Sui.`, `Signed in with Google &rarr; <b>${trunc(addr)}</b>. Your ${moons} Moons are now linked to your Sui address. No seed phrase, no wallet.`);
   }
 }
 
@@ -202,8 +205,9 @@ $('#signin').addEventListener('click', async ()=>{
     const url=await f.createAuthorizationURL({ provider:'google', clientId:GOOGLE_CLIENT_ID,
       redirectUrl: location.origin+location.pathname, network:'testnet' });
     location.href=url;
-  }catch(e){ console.warn('enoki sign-in failed, demo fallback:', e); setSignedIn(REGISTRY, true); }
+  }catch(e){ setSignedIn(REGISTRY, true); }
 });
+$('#guest').addEventListener('click', ()=> setSignedIn(REGISTRY, true));
 (async ()=>{
   if(!location.hash.includes('id_token')) return;
   try{
