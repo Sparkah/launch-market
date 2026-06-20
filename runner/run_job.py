@@ -261,6 +261,9 @@ def main() -> int:
     if manifest.get("blobId"):
         candidate["receipts"] = {"candidate": manifest}
         candidate["integrations"]["walrus"] = "live"
+        for ev in candidate.get("evidence", []):
+            if ev["label"] == "Walrus artifact":
+                ev["value"], ev["status"] = manifest.get("url"), "live"
         if manifest.get("suiObject"):
             candidate["integrations"]["sui"] = "live"
             candidate["sui"] = {
@@ -268,6 +271,9 @@ def main() -> int:
                 "object": manifest.get("suiObject"),
                 "explorer": manifest.get("suiExplorer"),
             }
+            for ev in candidate.get("evidence", []):
+                if ev["label"] == "Sui object":
+                    ev["value"], ev["status"] = manifest.get("suiExplorer"), "live"
         write_json(cand_path, candidate)
 
     # Validate the (now walrus-live) candidate with the Codeplain gate.

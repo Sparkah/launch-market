@@ -1,17 +1,203 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Game Factory Launch Market - auditable AI game candidates with spec, evidence, and transparent allocation."
-    />
-    <title>Game Factory Launch Market</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Market // greenlight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Hallmark - macrostructure: Terminal boot-log - tone: technical - anchor hue: phosphor green
+ * pre-emit critique: P5 H4 E5 S5 R4 V5 - monospace-only is the design */
+:root{
+  --bg:#07090a; --bg2:#0a0f0c;
+  --green:#39ff7a; --green-dim:#1f6b3e; --green-mid:#2aa564; --amber:#ffb347;
+  --line:rgba(57,255,122,.26); --line2:rgba(57,255,122,.5); --faint:rgba(57,255,122,.42);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--green); font-family:var(--mono); font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; position:relative; min-height:100vh;
+  text-shadow:0 0 6px rgba(57,255,122,.25);
+}
+/* CRT vignette */
+body::before{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(120% 80% at 50% 40%, transparent 55%, rgba(0,0,0,.55) 100%)}
+/* scanlines */
+body::after{content:"";position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(rgba(7,9,10,0) 0 2px, rgba(0,0,0,.28) 2px 3px)}
+@keyframes flick{0%,97%,100%{opacity:.5}98%{opacity:.36}}
+@media(prefers-reduced-motion:no-preference){body::after{animation:flick 6s infinite}}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--green);color:#04130a;text-shadow:none}
 
+/* cursor */
+.cur{display:inline-block;width:.62em;height:1.05em;background:var(--green);
+  margin-left:.12em;vertical-align:-.16em;box-shadow:0 0 10px rgba(57,255,122,.8);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.cur{animation:none}}
+
+/* status bar */
+.bar{position:sticky;top:0;z-index:10;background:linear-gradient(var(--bg),rgba(7,9,10,.82));backdrop-filter:blur(5px);
+  border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;justify-content:space-between;gap:12px;height:50px;font-size:13px;letter-spacing:.02em}
+.bar .mark{color:var(--green);font-weight:700}
+.bar .mark .sl{color:var(--green-mid)}
+.bar .tabs{display:flex;gap:8px}
+.tab{border:1px solid var(--line);padding:6px 12px;color:var(--green-mid);transition:.16s;white-space:nowrap}
+.tab:hover{border-color:var(--line2);color:var(--green);background:rgba(57,255,122,.07)}
+.tab.on{color:var(--green);border-color:var(--line2)}
+@media(max-width:440px){.bar-in{font-size:11.5px}.tab{padding:5px 9px}}
+
+/* prompt line helper */
+.cmd{color:var(--green-mid);font-size:13.5px;letter-spacing:.03em}
+.cmd .p{color:var(--green-dim)}
+
+/* hero */
+.hero{padding:78px 0 30px}
+.hero .cmd{margin-bottom:24px}
+h1{font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(31px,6.6vw,74px);
+  overflow-wrap:anywhere;max-width:17ch}
+h1 .out{color:var(--green)}
+.sub{margin-top:22px;color:var(--green-mid);font-size:clamp(15px,2.4vw,21px)}
+.sub .p{color:var(--green-dim)}
+.kicker{color:var(--green);font-size:clamp(13px,1.9vw,17px);letter-spacing:.02em;opacity:.95}
+.kicker::before{content:"// ";color:var(--green-dim)}
+
+/* live proof */
+.live{display:flex;gap:12px;flex-wrap:wrap;padding:8px 0 30px}
+.lv{display:inline-flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:10px;padding:12px 16px;background:var(--bg2);transition:.16s}
+a.lv:hover{border-color:var(--line2);background:rgba(57,255,122,.08);transform:translateY(-2px)}
+.lv b{font-size:15.5px;font-weight:700}
+.lv i{font-style:normal;font-size:11.5px;color:#04130a;background:var(--green);padding:3px 9px;border-radius:6px;font-weight:700;letter-spacing:.03em;box-shadow:0 0 12px rgba(57,255,122,.4)}
+
+/* pipeline */
+.block{padding:46px 0;border-top:1px solid var(--line)}
+.block > .cmd{margin-bottom:20px}
+.pipe{display:grid;gap:10px;max-width:620px}
+.row{display:flex;align-items:center;
+  border:1px solid var(--line);padding:16px 18px;background:var(--bg2)}
+.row .w{font-weight:700;font-size:clamp(20px,3.8vw,28px);letter-spacing:.01em}
+@media(max-width:520px){.row{padding:13px 14px}}
+
+/* candidates ls grid */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+figure{border:1px solid var(--line);background:var(--bg2);overflow:hidden;transition:.18s}
+figure:hover{border-color:var(--line2);transform:translateY(-3px)}
+figure .ph{aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid var(--line)}
+figure img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92) contrast(1.02)}
+figure figcaption{font-size:12px;color:var(--green-mid);padding:8px 10px;display:flex;justify-content:space-between;gap:8px}
+figure figcaption .st{color:var(--green)}
+figure figcaption .st.rev{color:var(--amber)}
+
+/* receipt line */
+.receipt{padding:56px 0;border-top:1px solid var(--line);text-align:left}
+.receipt .stamp{display:inline-block;max-width:100%;border:1px solid var(--line2);padding:20px 26px;
+  font-weight:800;font-size:clamp(19px,4.6vw,44px);letter-spacing:-.01em;position:relative;overflow-wrap:anywhere;
+  box-shadow:0 0 30px rgba(57,255,122,.12), inset 0 0 24px rgba(57,255,122,.06)}
+.receipt .stamp .chk{color:var(--green);margin-right:14px}
+@media(max-width:440px){.receipt .stamp{display:block;padding:15px 16px;font-size:20px;line-height:1.3}}
+
+/* economy */
+.econ{padding:60px 0;border-top:1px solid var(--line)}
+.econ-h{font-weight:800;letter-spacing:-.02em;line-height:1.06;font-size:clamp(26px,4.6vw,46px);overflow-wrap:anywhere;max-width:20ch;margin-bottom:32px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:760px){.tiers{grid-template-columns:1fr}}
+.tier{border:1px solid var(--line);background:var(--bg2);padding:24px 22px;display:flex;flex-direction:column;gap:14px;transition:.18s}
+.tier:hover{border-color:var(--line2)}
+.tier.hot{border-color:var(--line2);box-shadow:inset 0 0 34px rgba(57,255,122,.07)}
+.t-name{font-weight:800;font-size:clamp(23px,3.6vw,32px);letter-spacing:.01em}
+.t-line{color:var(--green-mid);font-size:clamp(15px,2vw,18px);line-height:1.35;flex:1}
+.t-price{font-weight:800;font-size:clamp(22px,3vw,30px)}
+.t-price i{color:var(--green-dim);font-style:normal;font-size:15px;font-weight:400}
+
+/* cta */
+.cta{padding:54px 0;border-top:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-weight:700;font-size:15px;padding:15px 26px;border:1px solid var(--line2);
+  color:var(--green);cursor:pointer;transition:.16s;letter-spacing:.02em;background:transparent;display:inline-flex;gap:10px;align-items:center}
+.btn .b{color:var(--green-dim)}
+.btn:hover{background:var(--green);color:#04130a;text-shadow:none;box-shadow:0 0 26px rgba(57,255,122,.45)}
+.btn:hover .b{color:#04130a}
+.btn.solid{background:rgba(57,255,122,.1)}
+
+footer{border-top:1px solid var(--line);padding:26px 0 60px;color:var(--green-dim);font-size:13px;letter-spacing:.04em}
+footer .p{color:var(--green-mid)}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap bar-in">
+  <span class="mark">launch_market<span class="sl"> // </span>greenlight</span>
+</div></div>
+
+<header class="wrap hero">
+  <p class="kicker">the front door to web3 gaming</p>
+  <h1><span class="out">The crowd decides which AI games get made.</span><span class="cur"></span></h1>
+  <p class="sub">Play instantly with a Google login. You're on Sui without knowing it.</p>
+</header>
+
+<section class="wrap live">
+  <a class="lv" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/rCF2V7lDZGWSr_AgmKW1vo3MJSViI58iajE95_qOTwQ" target="_blank" rel="noopener"><b>Walrus receipts</b><i>live</i></a>
+  <a class="lv" href="https://suiscan.xyz/testnet/account/0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df" target="_blank" rel="noopener"><b>Sui ownership</b><i>live</i></a>
+  <span class="lv"><b>Codeplain gate</b><i>7/7</i></span>
+</section>
+
+<section class="wrap block">
+  <div class="pipe">
+    <div class="row"><span class="w">Pitch.</span></div>
+    <div class="row"><span class="w">Greenlight.</span></div>
+    <div class="row"><span class="w">Ship.</span></div>
+  </div>
+</section>
+
+<section class="wrap block" id="browse">
+  <div class="grid">
+    <figure><div class="ph"><img src="landing-assets/merge_conquest.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/backrooms.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/devourling.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/parry_knight.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/power_wash.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/coin_cascade.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/beast_bazaar.png" alt="" loading="lazy"></div></figure>
+    <figure><div class="ph"><img src="landing-assets/gulp_rush.png" alt="" loading="lazy"></div></figure>
+  </div>
+</section>
+
+<section class="wrap receipt">
+  <a class="stamp" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/rCF2V7lDZGWSr_AgmKW1vo3MJSViI58iajE95_qOTwQ" target="_blank" rel="noopener">Greenlight, with receipts.<span class="cur"></span></a>
+</section>
+
+<section class="wrap econ" id="pricing">
+  <h2 class="econ-h">First build's free. Plays mint the rest.</h2>
+  <div class="tiers">
+    <div class="tier">
+      <span class="t-name">Play</span>
+      <span class="t-line">1 free build. 30 plays mints the next. A hit funds itself.</span>
+      <span class="t-price">free</span>
+    </div>
+    <div class="tier hot">
+      <span class="t-name">Pro</span>
+      <span class="t-line">5 builds a day. Skip the grind.</span>
+      <span class="t-price">$25<i> /mo</i></span>
+    </div>
+    <div class="tier">
+      <span class="t-name">Studio</span>
+      <span class="t-line">25 builds a day. Studios and clients.</span>
+      <span class="t-price">$50<i> /mo</i></span>
+    </div>
+  </div>
+</section>
+
+<section class="wrap cta" id="submit">
+  <a class="btn solid" href="loop.html">Browse candidates</a>
+  <a class="btn" href="creation.html">Submit a prompt</a>
+</section>
+
+</body>
+</html>
