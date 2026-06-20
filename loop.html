@@ -111,11 +111,12 @@ const GOOGLE_CLIENT_ID  = '928006945966-16dc76g3d64tak3p9237raajdn69av12.apps.go
 const REGISTRY = '0x184302c635f558959028a312de16dfeccf099a07a8283d5da9ea0bb6cb9039df';
 
 // Real, embedded factory games (served locally with the gallery sdk.js).
+const THUMBS = 'https://game-factory.tech/thumbs';
 const FEED = [
-  {s:'coin_cascade',   t:'Coin Cascade',   g:'merge',  h:'Drop, fuse, chain the cascade.'},
-  {s:'merge_conquest', t:'Merge Conquest', g:'merge',  h:'Merge an army, crush the line.'},
-  {s:'parry_knight',   t:'Parry Knight',   g:'action', h:'Read the wind-up. Counter-kill.'},
-  {s:'word_snake',     t:'Word Snake',     g:'word',   h:'Eat letters, spell words, grow.'},
+  {s:'merge_guns',    t:'Merge Guns',    g:'merge shooter', h:'Merge guns, melt the swarm.'},
+  {s:'merge_legion',  t:'Battle Merge',  g:'merge battle',  h:'Merge your army, hold the line.'},
+  {s:'bandlings',     t:'Bandlings',     g:'merge',          h:'Merge monsters, grow the song.'},
+  {s:'brainrot_2048', t:'2048 Brainrot', g:'puzzle',        h:'Slide and merge all the way to 2048.'},
 ];
 
 const $ = s => document.querySelector(s);
@@ -123,7 +124,7 @@ let moons = 0, signedIn = false, address = null, plays = 0, current = null;
 
 $('#feed').innerHTML = FEED.map((c,i)=>`
   <section class="card">
-    <img src="landing-assets/${c.s}.png" alt="">
+    <img src="${THUMBS}/${c.s}.png" alt="">
     <div class="scrim"></div>
     <div class="rail">
       <div class="rb on" data-like="${i}"><div class="ic">&#9650;</div><span>back</span></div>

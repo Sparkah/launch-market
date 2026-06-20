@@ -1,0 +1,2 @@
+2026-06-11T22:32:58+01:00  milestone#2  content+sharing push  v2: gacha rarities+pity, 10 species (3 meme-inspired specials), bench, egg timer, pre-start preview, band-code share links, wav export, mobile audio unlock fix, v1 save migration
+2026-06-12T16:58:00+01:00  milestone#3  retire+star-egg push  v5: selected creatures can be sold for noise refund or donated into persistent Star Egg meter; full-board state prompts retire instead of dead-ending; Yandex zip rebuilt and gated (presubmit PASS, yandex-testing 15/0/0/1 skip)
