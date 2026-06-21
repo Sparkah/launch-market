@@ -105,8 +105,8 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0 60px;colo
 <section class="wrap step" id="s1">
   <div class="step-h">step 1 <b>/ flat or deep?</b></div>
   <div class="choices">
-    <div class="choice" data-dim="2D"><b>2D</b><span>canvas. fast, snackable, instant to play.</span></div>
-    <div class="choice" data-dim="3D"><b>3D</b><span>Three.js + physics. worlds, racers, sandboxes.</span></div>
+    <div class="choice" data-dim="2D" role="button" tabindex="0"><b>2D</b><span>canvas. fast, snackable, instant to play.</span></div>
+    <div class="choice" data-dim="3D" role="button" tabindex="0"><b>3D</b><span>Three.js + physics. worlds, racers, sandboxes.</span></div>
   </div>
 </section>
 
@@ -118,7 +118,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0 60px;colo
 <section class="wrap step off" id="s3">
   <div class="step-h">step 3 <b>/ describe your twist</b></div>
   <div class="make">
-    <input id="prompt" type="text" maxlength="120" placeholder="e.g. a merge game where the pieces are hungry cats">
+    <input id="prompt" type="text" maxlength="120" aria-label="Describe your game" placeholder="e.g. a merge game where the pieces are hungry cats">
     <button class="btn" id="go" disabled>Generate</button>
   </div>
   <div class="route" id="route"></div>
@@ -174,6 +174,8 @@ function engineFor(p){
 }
 
 const $ = s => document.querySelector(s);
+function escHtml(s){return String(s||'').replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];});}
+document.addEventListener('keydown',function(e){ if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.matches&&e.target.matches('.choice,.preset')){ e.preventDefault(); e.target.click(); } });
 const credN = $('#credN');
 
 document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
@@ -187,7 +189,7 @@ function renderPresets(){
   const g = $('#presetGrid'); g.innerHTML='';
   PRESETS.filter(p=>p.dim===st.dim).forEach(p=>{
     const eng = engineFor(p);
-    const el = document.createElement('div'); el.className='preset';
+    const el = document.createElement('div'); el.className='preset'; el.setAttribute('role','button'); el.tabIndex=0;
     el.innerHTML = `<div class="pn">${p.name}${p.hot?' <span class="tag hot">hot</span>':''}</div><div class="pl">${p.like}</div>
       <div class="tags">
         <span class="tag dim">${p.dim}</span>
@@ -222,7 +224,7 @@ $('#go').addEventListener('click',()=>{
   const cap = s=>s.replace(/[^a-z0-9 ]/gi,' ').trim().split(/\s+/).slice(0,3).map(w=>w[0]?w[0].toUpperCase()+w.slice(1):'').join(' ')||'Untitled';
   const id='gf-lm-'+Math.floor(1e5+ (prompt.length*7919)%9e5).toString(36);
   const lines=[
-    `<span class="ln"><span class="p">~/launch_market $</span> create "${prompt}"</span>`,
+    `<span class="ln"><span class="p">~/launch_market $</span> create "${escHtml(prompt)}"</span>`,
     `<span class="ln">prototype <span class="g">${id}</span> &middot; preset <span class="g">${p.name}</span> &middot; ${p.dim}</span>`,
     `<span class="ln">building an instant playable prototype ...</span>`,
     `<span class="ln" style="opacity:.75">graduating games run the <span class="g">Codeplain</span> gate + get a Walrus/Sui receipt &mdash; live example: <a class="g" style="text-decoration:underline" href="https://aggregator.walrus-testnet.walrus.space/v1/blobs/pEMfa_eLCeWBBgcL667x8_5bJoMKn3hGofHW3Gi0Bs4" target="_blank" rel="noopener">Walrus blob</a> + <a class="g" style="text-decoration:underline" href="https://suiscan.xyz/testnet/object/0x188e0aa4d94d070a619a11dc77dea34b64d587302272023f31f8704b470168d0" target="_blank" rel="noopener">Sui object</a></span>`,
